@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qdrant_payload.schema.json",
+  "title": "QdrantChunkPayload",
+  "type": "object",
+  "required": [
+    "chunk_id",
+    "doc_id",
+    "path",
+    "chunk_index",
+    "source_root",
+    "first_bucket",
+    "sub_bucket",
+    "semantic_domain",
+    "semantic_decision",
+    "artifact_type",
+    "doc_type",
+    "sensitivity_level",
+    "tags"
+  ],
+  "properties": {
+    "chunk_id": {"type": "string"},
+    "doc_id": {"type": "string"},
+    "path": {"type": "string"},
+    "chunk_index": {"type": "integer", "minimum": 0},
+    "source_root": {"type": "string"},
+    "first_bucket": {"type": "string"},
+    "sub_bucket": {"type": "string"},
+    "semantic_domain": {"type": "string"},
+    "semantic_decision": {"type": "string"},
+    "semantic_score": {"type": "integer"},
+    "semantic_margin": {"type": "integer"},
+    "artifact_type": {"type": "string"},
+    "doc_type": {"type": "string"},
+    "sensitivity_level": {"type": "string"},
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "entities_systems": {"type": "array", "items": {"type": "string"}},
+    "entities_vendors": {"type": "array", "items": {"type": "string"}},
+    "entities_projects": {"type": "array", "items": {"type": "string"}},
+    "entities_people": {"type": "array", "items": {"type": "string"}},
+    "entities_locations": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,714 @@
+{
+  "_calibrator_meta": {
+    "generated_at": "2026-02-11T16:28:36-06:00",
+    "merge_report": {
+      "artifact_types_updated": 0,
+      "domains_updated": 1,
+      "ingest_fields_updated": 0,
+      "threshold_overrides_added": 2
+    },
+    "notes": [
+      "Add infrastructure keywords ('fiber','rack','switch','closet','network') to it_ops to capture infrastructure photos",
+      "Add 'wireless','access point' to it_ops for wireless infrastructure",
+      "Add 'boxnote' extension to artifact_types for proper classification",
+      "Example: add a path-based threshold override for a known photo folder to keep high-confidence routing"
+    ]
+  },
+  "artifact_types": [
+    {
+      "doc_types": [],
+      "exts": [],
+      "id": "meeting_notes",
+      "keywords": [
+        "minutes",
+        "agenda",
+        "meeting",
+        "standup"
+      ],
+      "phrases": [
+        "one on one"
+      ]
+    },
+    {
+      "doc_types": [],
+      "exts": [
+        "log"
+      ],
+      "id": "logbook",
+      "keywords": [
+        "logbook",
+        "journal",
+        "changelog",
+        "syslog"
+      ],
+      "phrases": [
+        "event log"
+      ]
+    },
+    {
+      "doc_types": [],
+      "exts": [],
+      "id": "procedure",
+      "keywords": [
+        "procedure",
+        "sop"
+      ],
+      "phrases": [
+        "work instruction"
+      ]
+    },
+    {
+      "doc_types": [],
+      "exts": [],
+      "id": "policy",
+      "keywords": [
+        "policy"
+      ],
+      "phrases": []
+    },
+    {
+      "doc_types": [],
+      "exts": [],
+      "id": "plan",
+      "keywords": [
+        "plan",
+        "roadmap",
+        "milestone",
+        "timeline"
+      ],
+      "phrases": [
+        "project plan",
+        "program plan"
+      ]
+    },
+    {
+      "doc_types": [],
+      "exts": [],
+      "id": "strategy",
+      "keywords": [
+        "strategy",
+        "strategic"
+      ],
+      "phrases": []
+    },
+    {
+      "doc_types": [],
+      "exts": [],
+      "id": "architecture",
+      "keywords": [
+        "architecture"
+      ],
+      "phrases": [
+        "design doc"
+      ]
+    },
+    {
+      "doc_types": [
+        "word",
+        "pdf"
+      ],
+      "exts": [],
+      "id": "contract",
+      "keywords": [
+        "contract",
+        "agreement",
+        "msa",
+        "sow",
+        "nda",
+        "addendum"
+      ],
+      "phrases": [
+        "statement of work"
+      ]
+    },
+    {
+      "doc_types": [],
+      "exts": [],
+      "id": "invoice",
+      "keywords": [
+        "invoice",
+        "invoicing",
+        "po",
+        "inv"
+      ],
+      "phrases": [
+        "purchase order"
+      ]
+    },
+    {
+      "doc_types": [],
+      "exts": [],
+      "id": "report",
+      "keywords": [
+        "report"
+      ],
+      "phrases": [
+        "status report",
+        "monthly report",
+        "quarterly report"
+      ]
+    },
+    {
+      "doc_types": [
+        "powerpoint"
+      ],
+      "exts": [],
+      "id": "deck",
+      "keywords": [],
+      "phrases": []
+    },
+    {
+      "doc_types": [
+        "spreadsheet"
+      ],
+      "exts": [],
+      "id": "dataset",
+      "keywords": [],
+      "phrases": []
+    },
+    {
+      "doc_types": [
+        "visio"
+      ],
+      "exts": [],
+      "id": "diagram",
+      "keywords": [],
+      "phrases": []
+    },
+    {
+      "doc_types": [
+        "html"
+      ],
+      "exts": [
+        "html",
+        "htm"
+      ],
+      "id": "web_page",
+      "keywords": [],
+      "phrases": []
+    },
+    {
+      "doc_types": [
+        "image"
+      ],
+      "exts": [],
+      "id": "photo",
+      "keywords": [],
+      "phrases": []
+    },
+    {
+      "doc_types": [
+        "email"
+      ],
+      "exts": [],
+      "id": "email",
+      "keywords": [],
+      "phrases": []
+    }
+  ],
+  "default_domain": "general",
+  "domains": [
+    {
+      "description": "Unclassified or mixed business content.",
+      "id": "general",
+      "keywords": [],
+      "name": "General",
+      "phrases": [],
+      "regex": []
+    },
+    {
+      "description": "AP/AR, invoices, budgeting, forecasting, accounting, tax.",
+      "id": "finance",
+      "keywords": [
+        "invoice",
+        "invoicing",
+        "po",
+        "purchase",
+        "order",
+        "budget",
+        "forecast",
+        "revenue",
+        "expense",
+        "expenses",
+        "capex",
+        "opex",
+        "payable",
+        "receivable",
+        "accounting",
+        "ledger",
+        "tax",
+        "audit"
+      ],
+      "name": "Finance",
+      "phrases": [
+        "purchase order",
+        "general ledger",
+        "accounts payable",
+        "accounts receivable"
+      ],
+      "regex": []
+    },
+    {
+      "description": "Hiring, onboarding, payroll, benefits, performance.",
+      "id": "hr",
+      "keywords": [
+        "employee",
+        "employees",
+        "onboarding",
+        "offboarding",
+        "benefits",
+        "payroll",
+        "compensation",
+        "candidate",
+        "recruiting",
+        "resume",
+        "interview",
+        "performance",
+        "review"
+      ],
+      "name": "HR",
+      "phrases": [
+        "performance review",
+        "offer letter",
+        "employee handbook"
+      ],
+      "regex": []
+    },
+    {
+      "description": "Contracts, agreements, NDAs, terms, legal notices.",
+      "id": "legal",
+      "keywords": [
+        "contract",
+        "agreement",
+        "nda",
+        "msa",
+        "sow",
+        "addendum",
+        "terms",
+        "liability",
+        "indemnification",
+        "confidentiality",
+        "privacy"
+      ],
+      "name": "Legal",
+      "phrases": [
+        "statement of work",
+        "terms and conditions"
+      ],
+      "regex": []
+    },
+    {
+      "description": "CRM, pipeline, opportunities, quotes, proposals, accounts.",
+      "id": "sales",
+      "keywords": [
+        "customer",
+        "client",
+        "pipeline",
+        "opportunity",
+        "deal",
+        "quote",
+        "proposal",
+        "crm",
+        "salesforce"
+      ],
+      "name": "Sales",
+      "phrases": [
+        "sales pipeline",
+        "account executive"
+      ],
+      "regex": []
+    },
+    {
+      "description": "Campaigns, brand, web, SEO, content, demand gen.",
+      "id": "marketing",
+      "keywords": [
+        "campaign",
+        "brand",
+        "seo",
+        "newsletter",
+        "leads",
+        "webinar",
+        "content",
+        "landing",
+        "utm"
+      ],
+      "name": "Marketing",
+      "phrases": [
+        "content calendar"
+      ],
+      "regex": []
+    },
+    {
+      "description": "Support tickets, cases, SLAs, KB articles, incidents.",
+      "id": "customer_support",
+      "keywords": [
+        "ticket",
+        "tickets",
+        "case",
+        "cases",
+        "sla",
+        "support",
+        "escalation",
+        "knowledge",
+        "article"
+      ],
+      "name": "Customer Support",
+      "phrases": [
+        "service level",
+        "knowledge base"
+      ],
+      "regex": []
+    },
+    {
+      "description": "Design docs, specs, architecture, SDLC, releases.",
+      "id": "engineering",
+      "keywords": [
+        "engineering",
+        "design",
+        "spec",
+        "specs",
+        "requirements",
+        "architecture",
+        "sdlc",
+        "release",
+        "deploy"
+      ],
+      "name": "Engineering",
+      "phrases": [
+        "design doc",
+        "release notes"
+      ],
+      "regex": []
+    },
+    {
+      "description": "Infrastructure, runbooks, networking, backups, on-call.",
+      "id": "it_ops",
+      "keywords": [
+        "access point",
+        "ap",
+        "backup",
+        "cabling",
+        "closet",
+        "data center",
+        "dhcp",
+        "dns",
+        "fiber",
+        "firewall",
+        "incident",
+        "infrastructure",
+        "monitor",
+        "network",
+        "oncall",
+        "patch panel",
+        "postmortem",
+        "rack",
+        "restore",
+        "router",
+        "runbook",
+        "server",
+        "server room",
+        "storage",
+        "switch",
+        "wireless",
+        "workstation"
+      ],
+      "name": "IT/Ops",
+      "phrases": [
+        "data center",
+        "disaster recovery",
+        "fiber installation",
+        "network closet",
+        "network infrastructure",
+        "network switch",
+        "on call",
+        "patch panel",
+        "rack mount",
+        "server rack",
+        "wireless access point"
+      ],
+      "regex": []
+    },
+    {
+      "description": "Vulnerabilities, incidents, audits, access control, IAM.",
+      "id": "security",
+      "keywords": [
+        "security",
+        "vulnerability",
+        "pentest",
+        "incident",
+        "forensics",
+        "mfa",
+        "iam",
+        "vpn",
+        "password"
+      ],
+      "name": "Security",
+      "phrases": [
+        "incident response",
+        "least privilege"
+      ],
+      "regex": []
+    },
+    {
+      "description": "SOC 2, ISO, SOX, GDPR, policies, controls.",
+      "id": "compliance",
+      "keywords": [
+        "compliance",
+        "soc2",
+        "soc",
+        "iso",
+        "sox",
+        "gdpr",
+        "hipaa",
+        "policy",
+        "controls",
+        "risk"
+      ],
+      "name": "Compliance",
+      "phrases": [
+        "soc 2",
+        "control evidence"
+      ],
+      "regex": []
+    },
+    {
+      "description": "PRDs, roadmaps, backlogs, user stories, feedback.",
+      "id": "product",
+      "keywords": [
+        "product",
+        "prd",
+        "roadmap",
+        "backlog",
+        "mvp",
+        "feature",
+        "feedback",
+        "user",
+        "story"
+      ],
+      "name": "Product",
+      "phrases": [
+        "user story",
+        "product roadmap"
+      ],
+      "regex": []
+    },
+    {
+      "description": "OKRs, KPIs, business operations, process, planning.",
+      "id": "operations",
+      "keywords": [
+        "operations",
+        "okr",
+        "okrs",
+        "kpi",
+        "kpis",
+        "process",
+        "planning",
+        "metrics",
+        "sop"
+      ],
+      "name": "Operations",
+      "phrases": [
+        "operating plan"
+      ],
+      "regex": []
+    },
+    {
+      "description": "Vendors, suppliers, procurement, RFPs, renewals.",
+      "id": "procurement",
+      "keywords": [
+        "vendor",
+        "vendors",
+        "supplier",
+        "procurement",
+        "rfp",
+        "renewal",
+        "pricing",
+        "quote"
+      ],
+      "name": "Procurement/Vendors",
+      "phrases": [
+        "vendor management"
+      ],
+      "regex": []
+    },
+    {
+      "description": "Strategy, board, leadership updates, quarterly planning.",
+      "id": "executive",
+      "keywords": [
+        "strategy",
+        "strategic",
+        "board",
+        "leadership",
+        "qbr",
+        "okr",
+        "initiative"
+      ],
+      "name": "Executive/Strategy",
+      "phrases": [
+        "quarterly business review"
+      ],
+      "regex": []
+    }
+  ],
+  "ingest": {
+    "exclude_basenames": [],
+    "exclude_dirs": [],
+    "exclude_exts": [],
+    "exclude_path_regex": []
+  },
+  "rules_version": 3,
+  "semantic_routing": {
+    "default_thresholds": {
+      "margin_threshold": 1,
+      "score_threshold": 3
+    },
+    "threshold_overrides": [
+      {
+        "first_bucket_regex": "(security|cyber|audit|compliance|policy|risk|mfa|vpn|safety|procedure)",
+        "id": "security_compliance_buckets",
+        "margin_threshold": 1,
+        "score_threshold": 2
+      },
+      {
+        "first_bucket_regex": "(ops|operations|network|support|service|infra|infrastructure|web|docs)",
+        "id": "ops_support_buckets",
+        "margin_threshold": 1,
+        "score_threshold": 2
+      },
+      {
+        "first_bucket": "root_docs",
+        "id": "example_path_override",
+        "margin_threshold": 1,
+        "path_prefix": "",
+        "path_regex": {
+          "flags": "i",
+          "pattern": "Infrastructure/(Photos|Diagrams)"
+        },
+        "score_threshold": 2,
+        "sub_bucket": "infrastructure_photos"
+      }
+    ]
+  },
+  "sensitivity": {
+    "flags": [
+      {
+        "content_keywords": [
+          "social security",
+          "ssn",
+          "date of birth",
+          "passport",
+          "driver license"
+        ],
+        "id": "pii_possible",
+        "path_keywords": [
+          "roster",
+          "ssn",
+          "passport",
+          "dob",
+          "drivers_license",
+          "badge",
+          "employee_list"
+        ],
+        "regex": [
+          {
+            "flags": "m",
+            "pattern": "\\b\\d{3}-\\d{2}-\\d{4}\\b"
+          }
+        ]
+      },
+      {
+        "content_keywords": [
+          "password",
+          "passwd",
+          "secret",
+          "token",
+          "private key",
+          "api key",
+          "client_secret"
+        ],
+        "id": "credentials_possible",
+        "path_keywords": [],
+        "regex": [
+          {
+            "flags": "i",
+            "pattern": "AKIA[0-9A-Z]{16}"
+          },
+          {
+            "flags": "m",
+            "pattern": "-----BEGIN [A-Z ]*PRIVATE KEY-----"
+          }
+        ]
+      },
+      {
+        "content_keywords": [
+          "confidential",
+          "restricted",
+          "do not distribute",
+          "internal use only"
+        ],
+        "id": "security_sensitive",
+        "path_keywords": [
+          "security",
+          "audit",
+          "incident",
+          "vulnerability",
+          "pentest",
+          "mfa",
+          "vpn"
+        ],
+        "regex": []
+      },
+      {
+        "content_keywords": [],
+        "id": "email",
+        "path_keywords": [],
+        "regex": []
+      }
+    ],
+    "level_map": {
+      "critical": [
+        "credentials_possible"
+      ],
+      "high": [
+        "pii_possible"
+      ],
+      "medium": [
+        "security_sensitive",
+        "email"
+      ],
+      "normal": []
+    },
+    "redactions": [
+      {
+        "flags": "i",
+        "id": "email_addr",
+        "pattern": "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\b",
+        "replacement": "[EMAIL]"
+      },
+      {
+        "flags": "m",
+        "id": "ipv4",
+        "pattern": "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b",
+        "replacement": "[IPV4]"
+      },
+      {
+        "flags": "m",
+        "id": "ssn",
+        "pattern": "\\b\\d{3}-\\d{2}-\\d{4}\\b",
+        "replacement": "[SSN]"
+      },
+      {
+        "flags": "m",
+        "id": "private_key_block",
+        "pattern": "-----BEGIN [A-Z ]*PRIVATE KEY-----[\\s\\S]*?-----END [A-Z ]*PRIVATE KEY-----",
+        "replacement": "[PRIVATE_KEY_BLOCK]"
+      },
+      {
+        "flags": "m",
+        "id": "kv_secret",
+        "pattern": "(?i)\\b(password|passwd|secret|token|api[_ -]?key|client_secret)\\b\\s*[:=]\\s*([^\\s]+)",
+        "replacement": "\\1=[REDACTED]"
+      }
+    ]
+  }
+}

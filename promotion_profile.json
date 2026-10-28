@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "profile_id": "calibrated_promotion_v1",
+  "profile_name": "Calibrated Full-Corpus Promotion",
+  "description": "Promotion policy derived from full-corpus validation that balances routed coverage gains with precision safeguards.",
+  "created_from_run": "kb_artifacts_full_promo_calibrated_run3",
+  "tool": {
+    "name": "corpus_routerkit",
+    "entrypoint": "corpus_routerkit.py"
+  },
+  "defaults": {
+    "root": ".",
+    "exclude_profile": "business_default",
+    "sample_mode": "redacted",
+    "keywords_source": "meta_only"
+  },
+  "inputs": {
+    "benchmark_file": "benchmark_fixed_300.jsonl",
+    "acceptance_baseline": "kb_artifacts_full_baseline_recheck"
+  },
+  "gates": {
+    "min_routed_gain": 80,
+    "max_routed_to_abstained": 15,
+    "max_itops_share_drift_pp": 21.0,
+    "min_route_precision": 0.895,
+    "min_domain_precision": 0.9,
+    "max_precision_drop_vs_baseline": 0.11
+  },
+  "promotion": {
+    "acceptance_fail_on_gate": true,
+    "promote_rules_to": "rules_active_promoted_calibrated.json"
+  },
+  "artifacts": {
+    "out_dir_template": "kb_artifacts_full_promo_{run_id}",
+    "acceptance_report": "<out>/acceptance_report.json",
+    "benchmark_metrics": "<out>/benchmark_metrics.json",
+    "manifest": "<out>/manifest.json"
+  },
+  "example": {
+    "candidate_rules": "rules_active.json",
+    "out": "kb_artifacts_full_promo_example",
+    "command": "python3 corpus_routerkit.py --root . --out kb_artifacts_full_promo_example --rules rules_active.json --exclude-profile business_default --benchmark-file benchmark_fixed_300.jsonl --acceptance-baseline kb_artifacts_full_baseline_recheck --acceptance-min-routed-gain 80 --acceptance-max-routed-to-abstained 15 --acceptance-max-itops-share-drift-pp 21 --acceptance-min-route-precision 0.895 --acceptance-min-domain-precision 0.9 --acceptance-max-precision-drop-vs-baseline 0.11 --acceptance-fail-on-gate --promote-rules-to rules_active_promoted_calibrated.json --sample-mode redacted --keywords-source meta_only"
+  }
+}

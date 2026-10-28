@@ -1,0 +1,461 @@
+name: dearly-departed
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
+    container_name: dd-elasticsearch
+    profiles: ["core", "app-v2"]
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.ml.enabled=false
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - ES_JAVA_OPTS=${ES_JAVA_OPTS:--Xms4g -Xmx4g}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "${ES_PORT:-9200}:9200"
+    volumes:
+      - ./localdata/elasticsearch:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:9200/_cluster/health >/dev/null || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 15
+
+  qdrant:
+    image: qdrant/qdrant:v1.13.4
+    container_name: dd-qdrant
+    profiles: ["core", "app-v2"]
+    restart: unless-stopped
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    ports:
+      - "${QDRANT_PORT:-6333}:6333"
+      - "${QDRANT_GRPC_PORT:-6334}:6334"
+    volumes:
+      - ./localdata/qdrant:/qdrant/storage
+    healthcheck:
+      # Minimal image; use binary self-check instead of curl.
+      test: ["CMD", "/qdrant/qdrant", "--version"]
+      interval: 20s
+      timeout: 5s
+      retries: 15
+
+  neo4j:
+    image: neo4j:5.26
+    container_name: dd-neo4j
+    profiles: ["core", "app-v2"]
+    restart: unless-stopped
+    environment:
+      - NEO4J_AUTH=neo4j/${NEO4J_PASSWORD:-change_me_local}
+      - NEO4J_server_memory_pagecache_size=${NEO4J_PAGECACHE_SIZE:-2G}
+      - NEO4J_server_memory_heap_initial__size=${NEO4J_HEAP_INITIAL_SIZE:-2G}
+      - NEO4J_server_memory_heap_max__size=${NEO4J_HEAP_MAX_SIZE:-2G}
+    ports:
+      - "${NEO4J_HTTP_PORT:-7474}:7474"
+      - "${NEO4J_BOLT_PORT:-7687}:7687"
+    volumes:
+      - ./localdata/neo4j/data:/data
+      - ./localdata/neo4j/logs:/logs
+      - ./localdata/neo4j/plugins:/plugins
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "cypher-shell -a bolt://127.0.0.1:7687 -u neo4j -p ${NEO4J_PASSWORD:-change_me_local} 'RETURN 1' >/dev/null 2>&1 || exit 1",
+        ]
+      interval: 20s
+      timeout: 10s
+      retries: 20
+
+  vllm-embed:
+    # Default to NVIDIA's NGC vLLM image (DGX Spark/GB10 optimized).
+    image: ${VLLM_EMBED_IMAGE:-nvcr.io/nvidia/vllm:25.09-py3}
+    container_name: dd-vllm-embed
+    profiles: ["models", "app-v2"]
+    restart: unless-stopped
+    environment:
+      - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN:-}
+      - HF_TOKEN=${HUGGING_FACE_HUB_TOKEN:-}
+      - HF_HOME=/models/hf
+      - TRANSFORMERS_CACHE=/models/hf
+      - VLLM_ALLOW_LONG_MAX_MODEL_LEN=1
+    command:
+      - python3
+      - -m
+      - vllm.entrypoints.openai.api_server
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8001"
+      - --model
+      - ${EMBED_MODEL:-Qwen/Qwen3-Embedding-8B}
+      - --served-model-name
+      - ${EMBED_SERVED_MODEL_NAME:-Qwen/Qwen3-Embedding-8B}
+      - --task
+      - embed
+      - --trust-remote-code
+      - --dtype
+      - ${EMBED_DTYPE:-auto}
+      - --max-model-len
+      - "${EMBED_MAX_MODEL_LEN:-8192}"
+      - --gpu-memory-utilization
+      - "${EMBED_GPU_MEMORY_UTILIZATION:-0.70}"
+      - --max-num-seqs
+      - "${EMBED_MAX_NUM_SEQS:-32}"
+    volumes:
+      - hf-cache:/models/hf
+    shm_size: "8gb"
+    ports:
+      - "${EMBED_PORT:-8001}:8001"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/v1/models', timeout=5)",
+        ]
+      interval: 20s
+      timeout: 5s
+      retries: 60
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  vllm-rerank:
+    # Default to NVIDIA's NGC vLLM image (DGX Spark/GB10 optimized).
+    image: ${VLLM_RERANK_IMAGE:-nvcr.io/nvidia/vllm:25.09-py3}
+    container_name: dd-vllm-rerank
+    profiles: ["models", "app-v2"]
+    restart: unless-stopped
+    environment:
+      - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN:-}
+      - HF_TOKEN=${HUGGING_FACE_HUB_TOKEN:-}
+      - HF_HOME=/models/hf
+      - TRANSFORMERS_CACHE=/models/hf
+      - VLLM_ALLOW_LONG_MAX_MODEL_LEN=1
+    command:
+      - python3
+      - -m
+      - vllm.entrypoints.openai.api_server
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8002"
+      - --model
+      - ${RERANK_MODEL:-Qwen/Qwen3-Reranker-8B}
+      - --served-model-name
+      - ${RERANK_SERVED_MODEL_NAME:-Qwen/Qwen3-Reranker-8B}
+      - --task
+      - score
+      # If this model/task combo fails in your vLLM version, override RERANK_MODEL
+      # to a sequence-classification-converted reranker model in .env.
+      - --trust-remote-code
+      - --dtype
+      - ${RERANK_DTYPE:-auto}
+      - --max-model-len
+      - "${RERANK_MAX_MODEL_LEN:-4096}"
+      - --gpu-memory-utilization
+      - "${RERANK_GPU_MEMORY_UTILIZATION:-0.70}"
+      - --max-num-seqs
+      - "${RERANK_MAX_NUM_SEQS:-64}"
+    volumes:
+      - hf-cache:/models/hf
+    shm_size: "8gb"
+    ports:
+      - "${RERANK_PORT:-8002}:8002"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8002/v1/models', timeout=5)",
+        ]
+      interval: 20s
+      timeout: 5s
+      retries: 60
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  query-api:
+    build:
+      context: .
+      dockerfile: containers/app-api/Dockerfile
+    image: dearly-departed-app:local
+    container_name: dd-query-api
+    profiles: ["app", "app-v2"]
+    restart: unless-stopped
+    environment:
+      - ES_URL=http://elasticsearch:9200
+      - ES_CHUNK_INDEX=kb_chunks
+      - ES_GRAPHRAG_INDEX=${ES_GRAPHRAG_INDEX:-kb_graphrag_artifacts}
+      - QDRANT_URL=http://qdrant:6333
+      - QDRANT_COLLECTION=kb_chunks_vec
+      - QDRANT_GRAPHRAG_COLLECTION=${QDRANT_GRAPHRAG_COLLECTION:-kb_graphrag_artifacts_vec}
+      - QDRANT_TIMEOUT_SEC=60
+      - EMBED_URL=http://vllm-embed:8001/v1/embeddings
+      - EMBED_MODEL_RUNTIME=${EMBED_MODEL_RUNTIME:-Qwen/Qwen3-Embedding-8B}
+      - VECTOR_DIM=${VECTOR_DIM:-4096}
+      - EMBED_TIMEOUT_SEC=120
+      - EMBED_DISABLE_TASK=${EMBED_DISABLE_TASK:-1}
+      - EMBED_DISABLE_DIMENSIONS=${EMBED_DISABLE_DIMENSIONS:-1}
+      - EMBED_QUERY_INSTRUCTION=${EMBED_QUERY_INSTRUCTION:-Given a web search query, retrieve relevant passages that answer the query}
+      - RERANK_ENABLED=${RERANK_ENABLED:-1}
+      - RERANK_URL=http://vllm-rerank:8002/v1/rerank
+      - RERANK_MODEL_RUNTIME=${RERANK_MODEL_RUNTIME:-Qwen/Qwen3-Reranker-8B}
+      - RERANK_TIMEOUT_SEC=${RERANK_TIMEOUT_SEC:-180}
+      - RERANK_TOP_N=${RERANK_TOP_N:-0}
+      - RERANK_INSTRUCTION=${RERANK_INSTRUCTION:-Given a web search query, retrieve relevant passages that answer the query}
+      - QUERY_CANDIDATE_POOL=${QUERY_CANDIDATE_POOL:-40}
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD:-change_me_local}
+      - QUERY_DEFAULT_TOP_K=${QUERY_DEFAULT_TOP_K:-10}
+      - QUERY_FUSION_K=${QUERY_FUSION_K:-60}
+      - TAXONOMY_ROUTER_JSON=${TAXONOMY_ROUTER_JSON:-/app/kb_artifacts_full_promo_calibrated_run3/router.json}
+      - QUERY_DECOMPOSER_ENABLED=${QUERY_DECOMPOSER_ENABLED:-1}
+      - QUERY_DECOMPOSER_USE_LLM=${QUERY_DECOMPOSER_USE_LLM:-1}
+      - QUERY_DECOMPOSER_MIN_CONFIDENCE=${QUERY_DECOMPOSER_MIN_CONFIDENCE:-0.45}
+      - QUERY_DECOMPOSER_MAX_HINTS=${QUERY_DECOMPOSER_MAX_HINTS:-3}
+      - QUERY_DECOMPOSER_UPGRADE_BASIC_MODE=${QUERY_DECOMPOSER_UPGRADE_BASIC_MODE:-1}
+      - QUERY_DECOMPOSER_MAX_LLM_CANDIDATES=${QUERY_DECOMPOSER_MAX_LLM_CANDIDATES:-10}
+      - QUERY_DECOMPOSER_MAX_LLM_KEYWORDS=${QUERY_DECOMPOSER_MAX_LLM_KEYWORDS:-8}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - CHAT_MODEL=${CHAT_MODEL:-gpt52-}
+      - CHAT_TEMPERATURE=${CHAT_TEMPERATURE:-0.1}
+      - CHAT_TOP_P=${CHAT_TOP_P:-0.9}
+      - CHAT_MAX_COMPLETION_TOKENS=${CHAT_MAX_COMPLETION_TOKENS:-800}
+      - CHAT_TIMEOUT_SEC=${CHAT_TIMEOUT_SEC:-180}
+      - CHAT_MAX_ATTEMPTS=${CHAT_MAX_ATTEMPTS:-3}
+      - CHAT_RETRY_BACKOFF_SEC=${CHAT_RETRY_BACKOFF_SEC:-1.5}
+    volumes:
+      - ./kb_artifacts_full_promo_calibrated_run3:/app/kb_artifacts_full_promo_calibrated_run3:ro
+    command: ["uvicorn", "services.query_api:app", "--host", "0.0.0.0", "--port", "8080"]
+    ports:
+      - "${QUERY_API_PORT:-8080}:8080"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+      vllm-embed:
+        condition: service_healthy
+      vllm-rerank:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=5)",
+        ]
+      interval: 20s
+      timeout: 5s
+      retries: 30
+
+  # --- Dearly Departed v2 Agent ---
+  agent-api-v2:
+    image: dearly-departed-app:local
+    container_name: dd-agent-api-v2
+    profiles: ["app-v2"]
+    restart: unless-stopped
+    environment:
+      - QUERY_API_URL=http://query-api:8080
+      - QUERY_API_TIMEOUT_SEC=300
+      - ES_URL=http://elasticsearch:9200
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD:-change_me_local}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - CHAT_MODEL=${CHAT_MODEL:-GPT-5.2}
+      - CHAT_TEMPERATURE=${CHAT_TEMPERATURE:-0.1}
+      - CHAT_TOP_P=${CHAT_TOP_P:-0.9}
+      - CHAT_TIMEOUT_SEC=${CHAT_TIMEOUT_SEC:-300}
+      - V2_CHAT_MAX_COMPLETION_TOKENS=8000
+      - V2_MAX_CONTEXT_TOKENS=350000
+      - V2_PORT=8082
+      - TAXONOMY_ROUTER_JSON=/app/kb_artifacts_full_promo_calibrated_run3/router.json
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY:-}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY:-}
+      - LANGFUSE_BASE_URL=http://langfuse-web:3000
+    volumes:
+      - ./kb_artifacts_full_promo_calibrated_run3:/app/kb_artifacts_full_promo_calibrated_run3:ro
+      - ./reports/traces:/app/reports/traces
+    command: ["uvicorn", "services.v2.api:app", "--host", "0.0.0.0", "--port", "8082"]
+    ports:
+      - "${AGENT_API_V2_PORT:-8082}:8082"
+    depends_on:
+      query-api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8082/v2/health', timeout=5)",
+        ]
+      interval: 20s
+      timeout: 5s
+      retries: 30
+
+  frontend-v2:
+    build:
+      context: ./frontend-v2
+      dockerfile: Dockerfile
+    image: dearly-departed-frontend-v2:local
+    container_name: dd-frontend-v2
+    profiles: ["app-v2"]
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_V2_PORT:-3001}:80"
+    depends_on:
+      agent-api-v2:
+        condition: service_healthy
+    volumes:
+      - ./unarchived:/usr/share/nginx/html/files/unarchived:ro
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:80/"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+
+  # --- Langfuse v3 Observability Stack ---
+  langfuse-db:
+    image: postgres:17
+    container_name: dd-langfuse-db
+    profiles: ["observability"]
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${LANGFUSE_PG_USER:-postgres}
+      POSTGRES_PASSWORD: ${LANGFUSE_PG_PASSWORD:-postgres}
+      POSTGRES_DB: ${LANGFUSE_PG_DB:-postgres}
+    volumes:
+      - ./localdata/langfuse-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  langfuse-clickhouse:
+    image: clickhouse/clickhouse-server
+    container_name: dd-langfuse-clickhouse
+    profiles: ["observability"]
+    restart: unless-stopped
+    environment:
+      CLICKHOUSE_DB: default
+      CLICKHOUSE_USER: ${LANGFUSE_CH_USER:-clickhouse}
+      CLICKHOUSE_PASSWORD: ${LANGFUSE_CH_PASSWORD:-clickhouse}
+    volumes:
+      - ./localdata/langfuse-clickhouse:/var/lib/clickhouse
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8123/ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  langfuse-redis:
+    image: redis:7
+    container_name: dd-langfuse-redis
+    profiles: ["observability"]
+    restart: unless-stopped
+    command: --requirepass ${LANGFUSE_REDIS_AUTH:-myredissecret} --maxmemory-policy noeviction
+    volumes:
+      - ./localdata/langfuse-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 10s
+      retries: 10
+
+  langfuse-minio:
+    image: cgr.dev/chainguard/minio
+    container_name: dd-langfuse-minio
+    profiles: ["observability"]
+    restart: unless-stopped
+    entrypoint: sh
+    command: -c 'mkdir -p /data/langfuse && minio server --address ":9000" --console-address ":9001" /data'
+    environment:
+      MINIO_ROOT_USER: ${LANGFUSE_MINIO_USER:-minio}
+      MINIO_ROOT_PASSWORD: ${LANGFUSE_MINIO_PASSWORD:-miniosecret}
+    volumes:
+      - ./localdata/langfuse-minio:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
+
+  langfuse-web:
+    image: langfuse/langfuse:3
+    container_name: dd-langfuse-web
+    profiles: ["observability"]
+    restart: unless-stopped
+    ports:
+      - "${LANGFUSE_PORT:-3002}:3000"
+    depends_on:
+      langfuse-db: { condition: service_healthy }
+      langfuse-clickhouse: { condition: service_healthy }
+      langfuse-redis: { condition: service_healthy }
+      langfuse-minio: { condition: service_healthy }
+    environment: &langfuse-env
+      DATABASE_URL: postgresql://${LANGFUSE_PG_USER:-postgres}:${LANGFUSE_PG_PASSWORD:-postgres}@langfuse-db:5432/${LANGFUSE_PG_DB:-postgres}
+      NEXTAUTH_SECRET: ${LANGFUSE_NEXTAUTH_SECRET:-changeme_local_secret}
+      NEXTAUTH_URL: http://localhost:${LANGFUSE_PORT:-3002}
+      SALT: ${LANGFUSE_SALT:-changeme_local_salt}
+      ENCRYPTION_KEY: ${LANGFUSE_ENCRYPTION_KEY:-0000000000000000000000000000000000000000000000000000000000000000}
+      CLICKHOUSE_MIGRATION_URL: clickhouse://langfuse-clickhouse:9000
+      CLICKHOUSE_URL: http://langfuse-clickhouse:8123
+      CLICKHOUSE_USER: ${LANGFUSE_CH_USER:-clickhouse}
+      CLICKHOUSE_PASSWORD: ${LANGFUSE_CH_PASSWORD:-clickhouse}
+      REDIS_HOST: langfuse-redis
+      REDIS_PORT: 6379
+      REDIS_AUTH: ${LANGFUSE_REDIS_AUTH:-myredissecret}
+      LANGFUSE_S3_EVENT_UPLOAD_BUCKET: langfuse
+      LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT: http://langfuse-minio:9000
+      LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID: ${LANGFUSE_MINIO_USER:-minio}
+      LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY: ${LANGFUSE_MINIO_PASSWORD:-miniosecret}
+      LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE: "true"
+      LANGFUSE_S3_MEDIA_UPLOAD_BUCKET: langfuse
+      LANGFUSE_S3_MEDIA_UPLOAD_ENDPOINT: http://langfuse-minio:9000
+      LANGFUSE_S3_MEDIA_UPLOAD_ACCESS_KEY_ID: ${LANGFUSE_MINIO_USER:-minio}
+      LANGFUSE_S3_MEDIA_UPLOAD_SECRET_ACCESS_KEY: ${LANGFUSE_MINIO_PASSWORD:-miniosecret}
+      LANGFUSE_S3_MEDIA_UPLOAD_FORCE_PATH_STYLE: "true"
+
+  langfuse-worker:
+    image: langfuse/langfuse-worker:3
+    container_name: dd-langfuse-worker
+    profiles: ["observability"]
+    restart: unless-stopped
+    depends_on:
+      langfuse-db: { condition: service_healthy }
+      langfuse-clickhouse: { condition: service_healthy }
+      langfuse-redis: { condition: service_healthy }
+      langfuse-minio: { condition: service_healthy }
+    environment: *langfuse-env
+
+volumes:
+  hf-cache:

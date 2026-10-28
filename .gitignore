@@ -1,0 +1,45 @@
+# Environment & secrets
+.env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Corpus data (raw archives + unarchived) — never commit captured employee data
+corpus/
+*.zip
+unarchived/
+inventory/
+
+# Calibration artifacts (all experiment runs + production)
+kb_artifacts_*/
+
+# Data store volumes
+localdata/
+
+# Reports & eval output
+reports/
+
+# Benchmark & sample data (derived from your corpus)
+benchmark_fixed_300.jsonl
+routing_sample_pack_10.csv
+eval_queries.template.jsonl
+
+# Alternative calibration rule files (experiments)
+rules_active_*.json
+
+# Generated eval task files
+evals/v2/regression/
+evals/v2/tasks.generated_*
+
+# macOS metadata
+._*
+.DS_Store
+
+# Frontend build artifacts
+node_modules/
+dist/
+*.tsbuildinfo
+
+# IDE / tool state
+.claude/

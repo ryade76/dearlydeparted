@@ -1,0 +1,3 @@
+{"id":"q1","query":"Where are the security plans and related architecture documents?","expected":{"semantic_domain":"security","first_buckets":[],"sub_buckets":[],"any_of_paths":["security","architecture"]}}
+{"id":"q2","query":"Show meeting notes and action items from IT operations.","expected":{"semantic_domain":"it_ops","first_buckets":[],"sub_buckets":[],"any_of_paths":["meeting","notes"]}}
+{"id":"q3","query":"Find procedures for IT work and safety controls.","expected":{"semantic_domain":"it_ops","first_buckets":[],"sub_buckets":[],"any_of_paths":["procedure","safety"]}}

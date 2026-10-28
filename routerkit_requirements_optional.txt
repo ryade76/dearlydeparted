@@ -1,0 +1,24 @@
+# Optional dependencies for corpus_routerkit.py
+#
+# Install as needed:
+#   python3 -m pip install -r routerkit_requirements_optional.txt
+#
+# PDF
+pypdf
+pdfminer.six
+#
+# HTML
+beautifulsoup4
+lxml
+#
+# Office OpenXML
+openpyxl
+python-docx
+python-pptx
+#
+# RTF
+striprtf
+#
+# Outlook .msg
+python-oxmsg
+extract-msg

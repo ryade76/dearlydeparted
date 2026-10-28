@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "doc_record.schema.json",
+  "title": "IngestDocumentRecord",
+  "type": "object",
+  "required": [
+    "doc_id",
+    "path",
+    "source_root",
+    "first_bucket",
+    "sub_bucket",
+    "semantic_domain",
+    "semantic_decision",
+    "doc_type",
+    "artifact_type",
+    "sensitivity_level",
+    "tags"
+  ],
+  "properties": {
+    "doc_id": {"type": "string"},
+    "path": {"type": "string"},
+    "source_root": {"type": "string"},
+    "size_bytes": {"type": "integer", "minimum": 0},
+    "mtime_date": {"type": "string"},
+    "ext": {"type": "string"},
+    "sha256": {"type": "string"},
+    "first_bucket": {"type": "string"},
+    "sub_bucket": {"type": "string"},
+    "semantic_domain": {"type": "string"},
+    "semantic_decision": {"type": "string", "enum": ["routed", "abstained"]},
+    "semantic_score": {"type": "integer"},
+    "semantic_margin": {"type": "integer"},
+    "semantic_abstain_reason": {"type": "string"},
+    "doc_type": {"type": "string"},
+    "artifact_type": {"type": "string"},
+    "sensitivity_level": {"type": "string"},
+    "sensitivity_flags": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "entities": {
+      "type": "object",
+      "properties": {
+        "systems": {"type": "array", "items": {"type": "string"}},
+        "vendors": {"type": "array", "items": {"type": "string"}},
+        "projects": {"type": "array", "items": {"type": "string"}},
+        "locations": {"type": "array", "items": {"type": "string"}},
+        "people": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "content_hash": {"type": "string"},
+    "chunk_count": {"type": "integer", "minimum": 0}
+  },
+  "additionalProperties": true
+}

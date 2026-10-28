@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "chunk_record.schema.json",
+  "title": "IngestChunkRecord",
+  "type": "object",
+  "required": [
+    "chunk_id",
+    "doc_id",
+    "chunk_index",
+    "text",
+    "char_start",
+    "char_end",
+    "token_estimate",
+    "semantic_domain",
+    "semantic_decision",
+    "first_bucket",
+    "sub_bucket",
+    "sensitivity_level"
+  ],
+  "properties": {
+    "chunk_id": {"type": "string"},
+    "doc_id": {"type": "string"},
+    "chunk_index": {"type": "integer", "minimum": 0},
+    "text": {"type": "string"},
+    "char_start": {"type": "integer", "minimum": 0},
+    "char_end": {"type": "integer", "minimum": 0},
+    "token_estimate": {"type": "integer", "minimum": 0},
+    "path": {"type": "string"},
+    "source_root": {"type": "string"},
+    "first_bucket": {"type": "string"},
+    "sub_bucket": {"type": "string"},
+    "semantic_domain": {"type": "string"},
+    "semantic_decision": {"type": "string", "enum": ["routed", "abstained"]},
+    "doc_type": {"type": "string"},
+    "artifact_type": {"type": "string"},
+    "sensitivity_level": {"type": "string"},
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "entities_systems": {"type": "array", "items": {"type": "string"}},
+    "entities_vendors": {"type": "array", "items": {"type": "string"}},
+    "entities_projects": {"type": "array", "items": {"type": "string"}},
+    "entities_people": {"type": "array", "items": {"type": "string"}},
+    "entities_locations": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

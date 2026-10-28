@@ -1,0 +1,34 @@
+Analyze the following user query and classify it for our retrieval-augmented generation system.
+
+Query: "{query}"
+
+Respond with a JSON object containing:
+{{
+  "intent": "<one of: factual_lookup, procedure_steps, troubleshooting, entity_centric, temporal, cross_domain_synthesis, comparison, taxonomy_navigation, graph_traversal, adversarial_no_answer>",
+  "complexity": "<one of: simple, moderate, complex>",
+  "strategy": "<one of: react, plan_execute>",
+  "taxonomy_hints": {{
+    "domains": ["<domain_id if identifiable>"],
+    "first_buckets": ["<bucket_id if identifiable>"],
+    "entity_names": ["<entity names mentioned>"],
+    "entity_types": ["<entity types: person, system, vendor, project, location>"]
+  }},
+  "temporal_range": {{
+    "date_from": "<ISO date if temporal, else empty>",
+    "date_to": "<ISO date if temporal, else empty>",
+    "is_temporal": <true/false>
+  }},
+  "reasoning": "<brief explanation of classification>"
+}}
+
+Classification guidelines:
+- simple + react: Single factual lookup, straightforward entity query, single-domain question
+- moderate + react: Multi-step but same domain, comparison within domain, listing/enumerating items
+- complex + plan_execute: Cross-domain synthesis, multi-entity comparison, deep graph traversal, broad overview
+- adversarial_no_answer: Questions about topics clearly outside the captured knowledge base (stock prices, weather, unrelated organizations)
+
+Additional guidance:
+- entity_centric: Questions about specific people, systems, or infrastructure components (who is X, what does X do, what X does Y run/use)
+- Queries asking to LIST or ENUMERATE items (e.g., "what servers does X run", "who works in Y") should be complexity=moderate because they require multiple retrieval passes for comprehensive answers
+- Person queries (who is X, what does X do) should include the person's name in entity_names and set entity_types to ["person"]
+- Infrastructure queries should include relevant system/component names in entity_names if identifiable

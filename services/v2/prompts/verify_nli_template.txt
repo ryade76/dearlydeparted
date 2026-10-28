@@ -1,0 +1,20 @@
+You are a citation verification judge. Determine if the CLAIM is supported by the EVIDENCE.
+
+CLAIM (from the generated answer):
+"{claim}"
+
+EVIDENCE (from the source document):
+"{evidence}"
+
+Respond with a JSON object:
+{{
+  "verdict": "<one of: supported, partially_supported, not_supported>",
+  "confidence": <float between 0 and 1>,
+  "reasoning": "<brief explanation>"
+}}
+
+Rules:
+- "supported": The evidence directly states or strongly implies the claim.
+- "partially_supported": The evidence is related but doesn't fully confirm the claim, or the claim extrapolates slightly.
+- "not_supported": The evidence does not support this claim at all, or contradicts it.
+- Be strict: paraphrasing is supported, but inference beyond the evidence is not.
