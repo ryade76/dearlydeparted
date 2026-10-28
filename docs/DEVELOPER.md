@@ -310,7 +310,7 @@ Non-streaming variant. Collects all SSE events internally, returns final `AskRes
     "evidence_count": 42,
     "context_tokens": 125000
   },
-  "model": "GPT-5.2",
+  "model": "gpt-4.1",
   "trace_id": "a1b2c3d4e5f6",
   "timing": {
     "classify": 450,
@@ -497,7 +497,7 @@ User Query
             ↓
         [SYNTHESIZE] — Deduplicate + assemble evidence into token-budgeted context
             ↓
-        [GENERATE] — LLM generates answer with streaming tokens (GPT-5.2 via an OpenAI-compatible API)
+        [GENERATE] — LLM generates answer with streaming tokens (via an OpenAI-compatible API)
             ↓
         [VERIFY] — Two-pass citation verification
             ├─ Pass 1: Token overlap (threshold 0.30)
@@ -629,7 +629,7 @@ Builds the LLM message chain:
 4. **Streaming**: Tokens streamed via `async_stream_complete()` with `generation_token` SSE events
 5. **Fallback**: If streaming fails, falls back to sync `async_complete()`
 
-LLM: GPT-5.2 via an OpenAI-compatible API (uses `max_completion_tokens`, not `max_tokens`). Default 8000 max output tokens.
+LLM: `CHAT_MODEL` (default `gpt-4.1`) via an OpenAI-compatible API (uses `max_completion_tokens`, not `max_tokens`). Default 8000 max output tokens.
 
 #### VERIFY (`services/v2/agent/verify.py`)
 
@@ -890,7 +890,7 @@ Multi-turn context: Prior turns are injected into CLASSIFY and REACT prompts as 
 |---|---|---|
 | `OPENAI_BASE_URL` | `https://api.openai.com/v1` | OpenAI-compatible API base URL |
 | `OPENAI_API_KEY` | — | API key |
-| `CHAT_MODEL` | `GPT-5.2` | LLM model ID |
+| `CHAT_MODEL` | `gpt-4.1` | LLM model ID |
 | `CHAT_TEMPERATURE` | `0.1` | Generation temperature |
 | `CHAT_TOP_P` | `0.9` | Top-p sampling |
 | `CHAT_TIMEOUT_SEC` | `120` | Request timeout |

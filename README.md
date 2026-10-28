@@ -179,7 +179,7 @@ make verify-ingest      # Cross-store doc/chunk parity check
 - **Intent-aware rebalancing** — enforces text-evidence floor, caps claim/taxonomy saturation per query intent, limits per-path repetition.
 - **Adaptive agent retries** — halves context and doubles token budget on empty LLM output; falls back to retrieval-grounded snippets.
 - **Content-addressed IDs** — `SHA256(path|size_bytes|mtime_date|content_hash)` makes ingest idempotent.
-- **Multi-turn conversation memory** — prior turns injected as native chat messages; GPT-5.2 handles 350K token context.
+- **Multi-turn conversation memory** — prior turns injected as native chat messages; the default 350K-token context budget is configurable via `V2_MAX_CONTEXT_TOKENS`.
 
 ## Documentation
 

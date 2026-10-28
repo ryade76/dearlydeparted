@@ -31,7 +31,7 @@ class ChatConfig:
 def load_chat_config() -> ChatConfig:
     base_url = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1").strip()
     api_key = os.getenv("OPENAI_API_KEY", "").strip()
-    model = os.getenv("CHAT_MODEL", "GPT-5").strip()
+    model = os.getenv("CHAT_MODEL", "gpt-4.1").strip()
     return ChatConfig(
         base_url=base_url,
         api_key=api_key,

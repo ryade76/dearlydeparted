@@ -738,7 +738,7 @@ def main():
     # Load LLM config from env
     base_url = os.getenv("OPENAI_BASE_URL", "").strip()
     api_key = os.getenv("OPENAI_API_KEY", "").strip()
-    model = os.getenv("CHAT_MODEL", "GPT-5.2").strip()
+    model = os.getenv("CHAT_MODEL", "gpt-4.1").strip()
     if not base_url or not api_key:
         print("ERROR: OPENAI_BASE_URL and OPENAI_API_KEY must be set in environment")
         sys.exit(1)

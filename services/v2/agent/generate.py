@@ -1,4 +1,4 @@
-"""GENERATE state handler — call GPT-5.2 with full context, stream tokens."""
+"""GENERATE state handler — call the chat model with full context, stream tokens."""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ def _load_system_prompt() -> str:
 
 
 async def generate_handler(ctx: AgentContext) -> AsyncGenerator[str, None]:
-    """Generate answer using GPT-5.2 with full assembled context."""
+    """Generate answer using the chat model with full assembled context."""
     model = config.CHAT_MODEL
     yield events.generation_start(model=model, context_tokens=ctx.context_token_count)
 

@@ -32,7 +32,7 @@ HUGGING_FACE_HUB_TOKEN=hf_...        # For model downloads
 NEO4J_PASSWORD=your_password          # Graph database auth
 OPENAI_API_KEY=your_key               # OpenAI-compatible LLM
 OPENAI_BASE_URL=https://...           # LLM endpoint URL
-CHAT_MODEL=GPT-5.2                    # Model ID
+CHAT_MODEL=gpt-4.1                    # Model ID
 
 # GPU memory (adjust for your GPU — defaults assume 2x GPUs)
 EMBED_GPU_MEMORY_UTILIZATION=0.45     # Embedding model VRAM fraction

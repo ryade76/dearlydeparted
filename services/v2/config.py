@@ -18,7 +18,7 @@ QUERY_API_TIMEOUT_SEC = int(os.getenv("QUERY_API_TIMEOUT_SEC", "300"))
 # --- LLM (OpenAI-compatible) ---
 OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1").strip()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
-CHAT_MODEL = os.getenv("CHAT_MODEL", "GPT-5.2").strip()
+CHAT_MODEL = os.getenv("CHAT_MODEL", "gpt-4.1").strip()
 CHAT_TEMPERATURE = float(os.getenv("CHAT_TEMPERATURE", "0.1"))
 CHAT_TOP_P = float(os.getenv("CHAT_TOP_P", "0.9"))
 CHAT_MAX_COMPLETION_TOKENS = int(os.getenv("V2_CHAT_MAX_COMPLETION_TOKENS", "8000"))

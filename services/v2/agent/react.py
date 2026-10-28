@@ -65,7 +65,7 @@ def _build_react_tools_prompt(ctx: AgentContext) -> str:
     lines.append("- For temporal questions: use temporal_search with date ranges")
     lines.append("- For taxonomy questions: use search_taxonomy")
     lines.append("- For adversarial/no-answer: use search_chunks with a basic query to verify no relevant docs exist")
-    lines.append("- Use top_k=40 for comprehensive queries — GPT-5.2 handles large context well. Use top_k=15-20 only for narrow lookups")
+    lines.append("- Use top_k=40 for comprehensive queries — the chat model handles large context well. Use top_k=15-20 only for narrow lookups")
     lines.append("- IMPORTANT: After reviewing initial results, search for SPECIFIC entity names or terms found — don't just repeat broad queries")
     lines.append("- DOCUMENT-SPECIFIC: When the question mentions a document name, filename, or file type (e.g., 'Windows survey', 'CIS meeting', 'HSPD-12 list'), include the FILENAME in your query or use source_path_hint. Also try document_lookup(path='<partial filename>') to retrieve it directly")
     lines.append("- SEARCH DIVERSITY: After 3+ searches returning the same top_sources, try varying your query (use CONCRETE terms like system names, acronyms, procedure numbers) or use source_path_hint. Domain filters can help for cross-domain queries but ALWAYS do at least one broad search WITHOUT a domain filter first")
