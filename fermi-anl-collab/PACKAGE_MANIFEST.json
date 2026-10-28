@@ -1,0 +1,186 @@
+{
+  "package": "Dearly Departed Agent Planning Handoff",
+  "version": "1.0",
+  "created_on": "2026-10-28",
+  "purpose": "planning_inputs_for_an_agent_with_demo_source_access",
+  "application_source_inspected": false,
+  "application_tests_executed": false,
+  "counts": {
+    "stories": 12,
+    "story_acceptance_examples": 33,
+    "shared_boundary_examples": 19,
+    "total_scenarios": 52,
+    "canonical_fixture_sources": 14,
+    "fixture_revisions": 3,
+    "payload_files_excluding_manifest": 30
+  },
+  "entry_point": "AGENT_PROMPT.md",
+  "required_receiving_agent_outputs": [
+    "IMPLEMENTATION_PLAN.md",
+    "STORY_CODE_MAP.md",
+    "DECISIONS_AND_UNCERTAINTIES.md"
+  ],
+  "package_checks": [
+    "JSON syntax and reference integrity",
+    "Story dependency DAG and bidirectional scenario coverage",
+    "Source hashes sizes and revision membership",
+    "EML parsing and exact attachment byte identity",
+    "Synthetic address-reuse identity consistency",
+    "Local Markdown links and feature scenario IDs",
+    "PDF text extraction and visual review by fixture author"
+  ],
+  "hash_algorithm": "SHA-256",
+  "hash_scope": "All payload files listed below; the manifest does not hash itself.",
+  "files": [
+    {
+      "path": "AGENT_PROMPT.md",
+      "bytes": 8400,
+      "sha256": "2810685e6e841063d395819c2a7f01d58841a2344e6d7377ed634b7295b5ca58"
+    },
+    {
+      "path": "DECISIONS.md",
+      "bytes": 15496,
+      "sha256": "46917f8879cfe4cfec401236b0b1432429b080bc70560c0abf9b81fc7894afec"
+    },
+    {
+      "path": "PRODUCT_BRIEF.md",
+      "bytes": 5085,
+      "sha256": "f695410e1fc111f2b433b7af480d43db91029f89cee4910fe4eba1b6aef87dfa"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5277,
+      "sha256": "e698fed313355b95e1a245c0c1ecaa9bf1b00adc8a90b72596545c759b8389bd"
+    },
+    {
+      "path": "SOURCES.md",
+      "bytes": 2063,
+      "sha256": "bd694050e933a5f2b60117ec050d1d60f1c096329d1a6be4ffc8721dfbe864a0"
+    },
+    {
+      "path": "USER_STORIES.md",
+      "bytes": 22401,
+      "sha256": "ae867ccfc09101bbaf56bd7ba84ecc561825188cf1f4efc44a879ab68fe171b0"
+    },
+    {
+      "path": "acceptance/README.md",
+      "bytes": 5937,
+      "sha256": "3d6734958d19fcce96a9bed957e8cc3cea9aebe3105638dfd3de07b0e116ed6f"
+    },
+    {
+      "path": "acceptance/access_examples.json",
+      "bytes": 9867,
+      "sha256": "543fce19b591f7dd664c69652f6538a471cbd6e5eb9e151d4ec656f4c87dfc94"
+    },
+    {
+      "path": "acceptance/scenarios.feature",
+      "bytes": 25718,
+      "sha256": "0e916e3d73b31e879ca8eee3e17c72457f611163d177dbb4f3b3b9d2112aaa99"
+    },
+    {
+      "path": "acceptance/scenarios.json",
+      "bytes": 39089,
+      "sha256": "f80f0328bce26f9949704dc31c790d683bbf07d40114a2253857d1c2118bda71"
+    },
+    {
+      "path": "fixtures/README.md",
+      "bytes": 4919,
+      "sha256": "82159dad2d59d83cc0be249a76aa597c117ce5238cef71778283936749df229c"
+    },
+    {
+      "path": "fixtures/records.json",
+      "bytes": 16969,
+      "sha256": "4eecd73d7abfbbe65bc427ba88a82abfd16b12c2e85f1c1a447644022295c6c9"
+    },
+    {
+      "path": "fixtures/sources/c1_approval_account.eml",
+      "bytes": 539,
+      "sha256": "44ba4c140a620a7ea39124d4038e17e2e7a6ce5623f26612de027015e83e07e3"
+    },
+    {
+      "path": "fixtures/sources/c2_approval_account.eml",
+      "bytes": 543,
+      "sha256": "0fce17f52d9ae7b844605fee7886c49342c7ad06b7cabcfef228be9fb1a35efd"
+    },
+    {
+      "path": "fixtures/sources/e1_propose_streaming.eml",
+      "bytes": 505,
+      "sha256": "3c2071910670c132c1e7f80340e2f68fedb59c9074578f347bb875e346ac1fe2"
+    },
+    {
+      "path": "fixtures/sources/e2_adopt_batching.eml",
+      "bytes": 60916,
+      "sha256": "a8e30264b63cdc523f7b88d6296a01ca526e02914f71eabdc01bd14a9290bd99"
+    },
+    {
+      "path": "fixtures/sources/e2_design.pdf",
+      "bytes": 43854,
+      "sha256": "61b20d60e70f5ae75db5d883412b2f312036a567b8c1c3e81dfe7f040578b482"
+    },
+    {
+      "path": "fixtures/sources/e3_feed_available.eml",
+      "bytes": 565,
+      "sha256": "070ac11bc15f1b0f73c3984f016b2e71329aa12be5a78f77b1f9da0008e76f56"
+    },
+    {
+      "path": "fixtures/sources/e4_migration_review.txt",
+      "bytes": 624,
+      "sha256": "525ddfb80a24a90df038dc20e89bc44ca06c81cd5cb6737223fd0aa23196e3ff"
+    },
+    {
+      "path": "fixtures/sources/e5_adopt_streaming.pdf",
+      "bytes": 43901,
+      "sha256": "e0f425bee5455cb78470f0eafd2b5bf15e6dedf7e41d805a70417c587414628a"
+    },
+    {
+      "path": "fixtures/sources/f1_late_retrospective.eml",
+      "bytes": 646,
+      "sha256": "0f3e563c4037cba77dcad49a6b74c02f825ef0c5e302153138bafe83f5a532bd"
+    },
+    {
+      "path": "fixtures/sources/j1_untrusted_instructions.eml",
+      "bytes": 719,
+      "sha256": "9dfd9a649516e5c16dde63700e257138a3d66f40a0dd448630423f0f846634b3"
+    },
+    {
+      "path": "fixtures/sources/o1_blair_equipment.eml",
+      "bytes": 554,
+      "sha256": "57ec5fb230404a109d58efecb3e234e597f6ac2308a5cc910801d562ecdd5258"
+    },
+    {
+      "path": "fixtures/sources/r1_recovered_partner_constraint.eml",
+      "bytes": 576,
+      "sha256": "1c4caee4fe5b64d481c30ac87b9edf7d09aea30e60bf50f77c7c79743d15c82e"
+    },
+    {
+      "path": "fixtures/sources/u1_uncertain_forecast.eml",
+      "bytes": 501,
+      "sha256": "9fdfa05cf68c4c1b4261622dcfeec83cf17bda57192bf61d3ec96b49c4e5bd34"
+    },
+    {
+      "path": "fixtures/sources/x1_restricted_reserve.eml",
+      "bytes": 552,
+      "sha256": "6b4644cc28d24d52f8f54ad2b4932227c651d0e8cfd4f3947f01dc81f0efb9e5"
+    },
+    {
+      "path": "planning_templates/DECISIONS_AND_UNCERTAINTIES.md",
+      "bytes": 3176,
+      "sha256": "ab686cf7dd1c2c2f73e9b2ae27d788ade164e8f20534c936ab5730353a4a291b"
+    },
+    {
+      "path": "planning_templates/IMPLEMENTATION_PLAN.md",
+      "bytes": 4759,
+      "sha256": "d6221f75e5c8a052b17f20852c7a1e94321106c4cafc2c971aad1de7598d358f"
+    },
+    {
+      "path": "planning_templates/STORY_CODE_MAP.md",
+      "bytes": 3983,
+      "sha256": "8c773562bcc45b28085afc5061f000322a9e8bb2d802a861929fbea55dfcbfa8"
+    },
+    {
+      "path": "stories.json",
+      "bytes": 9246,
+      "sha256": "46360a5cacaa9c2b8a14f08fe282475ef278f9fabdb0a007879c0677d6a16dbe"
+    }
+  ]
+}

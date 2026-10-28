@@ -1,0 +1,13 @@
+SYNTHETIC TEST RECORD
+Source ID: E4
+Meeting: Atlas migration review
+Date: 2025-04-12
+Start: 14:00 UTC
+Participants: Alex Morgan; Maya Chen; Taylor Reed
+
+[14:02] Taylor Reed: I recommend migrating to the new event feed immediately.
+[14:04] Maya Chen: We will defer migration until we have validated completeness and nightly reconciliation. The feed being available is not enough for adoption.
+[14:05] Alex Morgan: I am recording the team decision to continue nightly batching while those checks are pending.
+[14:06] Taylor Reed: My proposal is still immediate migration, but I understand the team's deferral.
+
+End: 14:07 UTC

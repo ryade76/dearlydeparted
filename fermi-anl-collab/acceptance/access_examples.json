@@ -1,0 +1,388 @@
+{
+  "schema_version": "1.0",
+  "synthetic": true,
+  "purpose": "policy_input_and_expected_outcome_fixture_not_a_required_policy_engine",
+  "directory_observation_max_age_seconds": 60,
+  "archive_subjects": [
+    {
+      "archive_id": "archive-alex-001",
+      "immutable_subject_id": "employee-alex-original",
+      "historical_email": "alex@dearly-departed.invalid",
+      "departed_ldap_state": "disabled"
+    },
+    {
+      "archive_id": "archive-blair-002",
+      "immutable_subject_id": "employee-blair-original",
+      "historical_email": "blair@dearly-departed.invalid",
+      "departed_ldap_state": "disabled"
+    }
+  ],
+  "principals": [
+    {
+      "id": "ada-admin",
+      "display_name": "Ada",
+      "type": "human",
+      "enabled": true,
+      "org_path": "/Administration",
+      "groups": [
+        "policy-admins"
+      ]
+    },
+    {
+      "id": "chris-collector",
+      "display_name": "Chris",
+      "type": "human",
+      "enabled": true,
+      "org_path": "/Records",
+      "groups": [
+        "archive-collectors"
+      ]
+    },
+    {
+      "id": "sam-successor",
+      "display_name": "Sam",
+      "type": "human",
+      "enabled": true,
+      "org_path": "/Engineering/Network/Operations",
+      "groups": []
+    },
+    {
+      "id": "maya-host",
+      "display_name": "Maya Chen",
+      "type": "human",
+      "enabled": true,
+      "org_path": "/Engineering/Network",
+      "groups": [
+        "atlas-readers",
+        "restricted-atlas"
+      ]
+    },
+    {
+      "id": "nolan-project",
+      "display_name": "Nolan",
+      "type": "human",
+      "enabled": true,
+      "org_path": "/Research/Controls",
+      "groups": [
+        "atlas-readers"
+      ]
+    },
+    {
+      "id": "priya-sibling",
+      "display_name": "Priya",
+      "type": "human",
+      "enabled": true,
+      "org_path": "/Engineering/Facilities",
+      "groups": []
+    },
+    {
+      "id": "taylor-denied",
+      "display_name": "Taylor Reed",
+      "type": "human",
+      "enabled": true,
+      "org_path": "/Engineering/Network",
+      "groups": [
+        "suspended-consult"
+      ]
+    },
+    {
+      "id": "bot-atlas",
+      "display_name": "Atlas virtual colleague",
+      "type": "virtual",
+      "enabled": true,
+      "org_path": "/Virtual",
+      "groups": []
+    },
+    {
+      "id": "lee-blair-reader",
+      "display_name": "Lee",
+      "type": "human",
+      "enabled": true,
+      "org_path": "/Research/Controls",
+      "groups": [
+        "blair-readers"
+      ]
+    },
+    {
+      "id": "new-alex-address",
+      "display_name": "Alex Newperson",
+      "type": "human",
+      "enabled": true,
+      "org_path": "/Engineering/Facilities",
+      "groups": [],
+      "email": "alex@dearly-departed.invalid"
+    }
+  ],
+  "policy_rules": [
+    {
+      "id": "POL01",
+      "effect": "allow",
+      "action": "Consult",
+      "archive_id": "archive-alex-001",
+      "subject_condition": {
+        "org_subtree": "/Engineering/Network"
+      },
+      "explanation": "An explicit subtree grant authorizes descendants; hierarchy alone is not a grant."
+    },
+    {
+      "id": "POL02",
+      "effect": "allow",
+      "action": "Consult",
+      "archive_id": "archive-alex-001",
+      "subject_condition": {
+        "group": "atlas-readers"
+      }
+    },
+    {
+      "id": "POL03",
+      "effect": "allow",
+      "action": "Collect",
+      "archive_id": "archive-alex-001",
+      "subject_condition": {
+        "group": "archive-collectors"
+      },
+      "additional_requirement": "Approved export origin and resolved source-policy mapping."
+    },
+    {
+      "id": "POL04",
+      "effect": "allow",
+      "action": "Administer",
+      "resource_scope": "policy",
+      "subject_condition": {
+        "group": "policy-admins"
+      }
+    },
+    {
+      "id": "POL05",
+      "effect": "restriction",
+      "action": "Consult",
+      "archive_id": "archive-alex-001",
+      "source_id": "X1",
+      "additional_requirement": {
+        "group": "restricted-atlas"
+      },
+      "explanation": "Additional condition; does not itself grant Consult."
+    },
+    {
+      "id": "POL06",
+      "effect": "allow",
+      "action": "Consult",
+      "archive_id": "archive-alex-001",
+      "subject_condition": {
+        "principal_id": "bot-atlas"
+      },
+      "explanation": "Explicit virtual-principal grant, independent of host or owner."
+    },
+    {
+      "id": "POL07",
+      "effect": "allow",
+      "action": "Consult",
+      "archive_id": "archive-blair-002",
+      "subject_condition": {
+        "group": "blair-readers"
+      }
+    },
+    {
+      "id": "POL08",
+      "effect": "deny",
+      "action": "Consult",
+      "archive_id": "archive-alex-001",
+      "subject_condition": {
+        "group": "suspended-consult"
+      }
+    }
+  ],
+  "combination_rules": [
+    "A current enabled principal needs an applicable positive action/resource grant.",
+    "Applicable explicit deny takes precedence; restrictions are additional mandatory conditions.",
+    "Unknown source-policy mappings deny use.",
+    "No grant is inferred from an email match, manager title, departed employee access, or administrative authority.",
+    "Consult and Collect are separate; current policies apply to old revisions and derived outputs.",
+    "A shared room uses the intersection across current humans and explicitly configured virtual principals.",
+    "A departed representation is a scoped capability, not another current LDAP participant.",
+    "This static fixture does not verify a real LDAP schema or replication behavior."
+  ],
+  "expected_decisions": [
+    {
+      "principal_id": "sam-successor",
+      "action": "Consult",
+      "resource": "archive-alex-001/E2_EMAIL",
+      "outcome": "allow",
+      "policy_ids": [
+        "POL01"
+      ]
+    },
+    {
+      "principal_id": "priya-sibling",
+      "action": "Consult",
+      "resource": "archive-alex-001/E2_EMAIL",
+      "outcome": "deny",
+      "policy_ids": [],
+      "reason": "No applicable grant."
+    },
+    {
+      "principal_id": "nolan-project",
+      "action": "Consult",
+      "resource": "archive-alex-001/E2_EMAIL",
+      "outcome": "allow",
+      "policy_ids": [
+        "POL02"
+      ]
+    },
+    {
+      "principal_id": "nolan-project",
+      "action": "Consult",
+      "resource": "archive-alex-001/X1",
+      "outcome": "deny",
+      "policy_ids": [
+        "POL02",
+        "POL05"
+      ],
+      "reason": "Additional restriction not satisfied."
+    },
+    {
+      "principal_id": "maya-host",
+      "action": "Consult",
+      "resource": "archive-alex-001/X1",
+      "outcome": "allow",
+      "policy_ids": [
+        "POL01",
+        "POL02",
+        "POL05"
+      ]
+    },
+    {
+      "principal_id": "chris-collector",
+      "action": "Collect",
+      "resource": "archive-alex-001",
+      "outcome": "allow_if_approved_origin_and_mapping",
+      "policy_ids": [
+        "POL03"
+      ]
+    },
+    {
+      "principal_id": "chris-collector",
+      "action": "Consult",
+      "resource": "archive-alex-001/E2_EMAIL",
+      "outcome": "deny",
+      "policy_ids": []
+    },
+    {
+      "principal_id": "ada-admin",
+      "action": "Administer",
+      "resource": "policy",
+      "outcome": "allow",
+      "policy_ids": [
+        "POL04"
+      ]
+    },
+    {
+      "principal_id": "ada-admin",
+      "action": "Consult",
+      "resource": "archive-alex-001/E2_EMAIL",
+      "outcome": "deny",
+      "policy_ids": []
+    },
+    {
+      "principal_id": "taylor-denied",
+      "action": "Consult",
+      "resource": "archive-alex-001/E2_EMAIL",
+      "outcome": "deny",
+      "policy_ids": [
+        "POL01",
+        "POL08"
+      ]
+    },
+    {
+      "principal_id": "bot-atlas",
+      "action": "Consult",
+      "resource": "archive-alex-001/E2_EMAIL",
+      "outcome": "allow",
+      "policy_ids": [
+        "POL06"
+      ]
+    },
+    {
+      "principal_id": "bot-atlas",
+      "action": "Consult",
+      "resource": "archive-alex-001/X1",
+      "outcome": "deny",
+      "policy_ids": [
+        "POL05",
+        "POL06"
+      ]
+    },
+    {
+      "principal_id": "lee-blair-reader",
+      "action": "Consult",
+      "resource": "archive-blair-002/O1",
+      "outcome": "allow",
+      "policy_ids": [
+        "POL07"
+      ]
+    },
+    {
+      "principal_id": "sam-successor",
+      "action": "Consult",
+      "resource": "archive-blair-002/O1",
+      "outcome": "deny",
+      "policy_ids": []
+    },
+    {
+      "principal_id": "new-alex-address",
+      "action": "Consult",
+      "resource": "archive-alex-001/E2_EMAIL",
+      "outcome": "deny",
+      "policy_ids": []
+    }
+  ],
+  "room_examples": [
+    {
+      "id": "ROOM01",
+      "principals": [
+        "maya-host",
+        "sam-successor"
+      ],
+      "archive_id": "archive-alex-001",
+      "expected_permitted_source_class": "ordinary atlas evidence within the selected revision and perspective",
+      "explicitly_excluded_sources": [
+        "X1"
+      ]
+    },
+    {
+      "id": "ROOM02",
+      "principals": [
+        "maya-host",
+        "bot-atlas"
+      ],
+      "archive_id": "archive-alex-001",
+      "expected_permitted_source_class": "ordinary atlas evidence within the selected revision and perspective",
+      "explicitly_excluded_sources": [
+        "X1"
+      ]
+    },
+    {
+      "id": "ROOM03",
+      "principals": [
+        "maya-host",
+        "sam-successor",
+        "bot-atlas"
+      ],
+      "archive_id": "archive-alex-001",
+      "expected_permitted_source_class": "ordinary atlas evidence within the selected revision and perspective",
+      "explicitly_excluded_sources": [
+        "X1"
+      ]
+    }
+  ],
+  "saved_record_example": {
+    "original_roster": [
+      "maya-host",
+      "sam-successor",
+      "bot-atlas"
+    ],
+    "non_roster_principal": "nolan-project",
+    "expected_non_roster_access": "deny",
+    "roster_members_must_also_pass_current_consult_and_evidence_permissions": true
+  }
+}

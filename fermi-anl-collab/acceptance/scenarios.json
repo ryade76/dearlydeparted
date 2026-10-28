@@ -1,0 +1,988 @@
+{
+  "schema_version": "1.0",
+  "purpose": "acceptance_specification_not_executed_tests",
+  "comparison_policy": "Evaluate claims, evidence, uncertainty and boundaries; do not require exact generated wording.",
+  "scenarios": [
+    {
+      "id": "S01-AC01",
+      "title": "Subtree inheritance without sibling access",
+      "story_ids": [
+        "S01"
+      ],
+      "category": "story_acceptance",
+      "given": "a Network-subtree grant",
+      "when": "I check a descendant and sibling department",
+      "then": [
+        "the descendant is allowed and the sibling is denied unless another applicable grant exists."
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Use Sam (descendant) and Priya (sibling) from access_examples.json. Nolan is the separate cross-project example.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S01-AC02",
+      "title": "Project grant respects evidence restriction",
+      "story_ids": [
+        "S01"
+      ],
+      "category": "story_acceptance",
+      "given": "an Atlas project grant and a restricted source",
+      "when": "I check access",
+      "then": [
+        "the project grant reaches eligible Atlas evidence and cannot override the restriction."
+      ],
+      "fixture_source_ids": [
+        "X1"
+      ],
+      "verification_notes": "Nolan may consult ordinary Alex/Atlas evidence but cannot use X1; Maya has the additional required restricted grant.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S01-AC03",
+      "title": "Collect does not grant Consult",
+      "story_ids": [
+        "S01"
+      ],
+      "category": "story_acceptance",
+      "given": "Collect without Consult",
+      "when": "the operator requests consultation",
+      "then": [
+        "access is denied with an appropriate rule explanation and no protected content."
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Chris can perform authorized collection; the product denies question and source-passage access without Consult.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S02-AC01",
+      "title": "Email supports the recorded rationale",
+      "story_ids": [
+        "S02"
+      ],
+      "category": "story_acceptance",
+      "given": "an authorized operator imports the E1–E2 emails",
+      "when": "an authorized successor asks why nightly processing was adopted",
+      "then": [
+        "the answer explains the recorded deadline and opens its supporting passage."
+      ],
+      "fixture_source_ids": [
+        "E1",
+        "E2_EMAIL"
+      ],
+      "verification_notes": "Verify the launch deadline from E2_EMAIL's body. Reconciliation is usable only if actual PDF interpretation and its S03 evidence are available; it is not required to demonstrate the email slice. Credit working PDF support if the demo already has it.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S02-AC02",
+      "title": "Missing upstream reason stays unknown",
+      "story_ids": [
+        "S02"
+      ],
+      "category": "story_acceptance",
+      "given": "R1 is missing",
+      "when": "the user asks why real-time delivery was unavailable",
+      "then": [
+        "that specific reason remains unknown rather than being invented."
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL"
+      ],
+      "verification_notes": "Use r1. R1 and the oracle claims about R1 must be absent from every retrieval/model path. Do not assert the specific nightly-only partner constraint.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S02-AC03",
+      "title": "Retry preserves accepted evidence",
+      "story_ids": [
+        "S02"
+      ],
+      "category": "story_acceptance",
+      "given": "a known failed item",
+      "when": "the operator retries it",
+      "then": [
+        "its status is visible and previously accepted evidence is not duplicated."
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL"
+      ],
+      "verification_notes": "Inject a failure for a known selected item using the future implementation's supported test seam; preserve accepted item identity on retry.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S02-AC04",
+      "title": "Capture and account for attachments",
+      "story_ids": [
+        "S02"
+      ],
+      "category": "story_acceptance",
+      "given": "email attachments",
+      "when": "they are imported",
+      "then": [
+        "originals and parent-email relationships are retained and unprocessed or failed items remain visible as coverage gaps. S03 adds supported attachment content to answers."
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL",
+        "E2_DESIGN"
+      ],
+      "verification_notes": "One preserved PDF attachment with a parent link; unprocessed content is visible as a gap until S03.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S03-AC01",
+      "title": "Document adds the missing constraint",
+      "story_ids": [
+        "S03"
+      ],
+      "category": "story_acceptance",
+      "given": "an approved standalone or attached design document adds the reconciliation requirement absent from email",
+      "when": "the user asks which constraints mattered",
+      "then": [
+        "the answer incorporates it and opens the document passage."
+      ],
+      "fixture_source_ids": [
+        "E2_DESIGN"
+      ],
+      "verification_notes": "Require nightly reconciliation with a locator into E2_DESIGN; an email-only citation is insufficient for that constraint.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S03-AC02",
+      "title": "Do not invent an earlier file revision",
+      "story_ids": [
+        "S03"
+      ],
+      "category": "story_acceptance",
+      "given": "only a later file revision is available",
+      "when": "the system displays or cites it",
+      "then": [
+        "it retains its actual revision and date and does not invent an earlier version."
+      ],
+      "fixture_source_ids": [
+        "E5"
+      ],
+      "verification_notes": "Use E5 as the only available version in this scenario; no fabricated February version or citation is permitted.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S04-AC01",
+      "title": "Meeting evidence has speaker attribution",
+      "story_ids": [
+        "S04"
+      ],
+      "category": "story_acceptance",
+      "given": "the E4 transcript",
+      "when": "the user asks what the team agreed",
+      "then": [
+        "the answer identifies the deferral, its recorded reason, and the relevant speaker-attributed segment."
+      ],
+      "fixture_source_ids": [
+        "E4"
+      ],
+      "verification_notes": "Require the validation-related deferral from E4 and the speaker/segment supporting it.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S04-AC02",
+      "title": "Proposal and attendance are not adoption or endorsement",
+      "story_ids": [
+        "S04"
+      ],
+      "category": "story_acceptance",
+      "given": "one attendee proposes migration and others defer it",
+      "when": "the decision is summarized",
+      "then": [
+        "the proposal remains distinct from adoption and attendance does not become endorsement."
+      ],
+      "fixture_source_ids": [
+        "E4"
+      ],
+      "verification_notes": "Taylor's immediate-migration proposal stays a proposal; Alex's explicit statement can be attributed, but mere attendance cannot prove agreement.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S05-AC01",
+      "title": "Cold restore survives departed-account disablement",
+      "story_ids": [
+        "S05"
+      ],
+      "category": "story_acceptance",
+      "given": "a published encrypted S3 casket",
+      "when": "temporary intake state is removed and the departed account is disabled",
+      "then": [
+        "an authorized user can restore it, repeat the known question, and open its preserved evidence."
+      ],
+      "fixture_source_ids": [
+        "E1",
+        "E2_EMAIL",
+        "E2_DESIGN",
+        "E4"
+      ],
+      "verification_notes": "Restore original evidence plus usable derived state or a documented rebuild path; service key authority remains available.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S05-AC02",
+      "title": "Failed restore never becomes ready",
+      "story_ids": [
+        "S05"
+      ],
+      "category": "story_acceptance",
+      "given": "corruption or unavailable decryption authority",
+      "when": "restoration is attempted",
+      "then": [
+        "the revision never becomes ready and a recoverable failure is shown."
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Test corruption and unavailable decryption authority separately. Neither path may expose a ready revision.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S05-AC03",
+      "title": "Partial publication is explicit",
+      "story_ids": [
+        "S05"
+      ],
+      "category": "story_acceptance",
+      "given": "unresolved intake gaps",
+      "when": "publication is requested",
+      "then": [
+        "partial coverage requires explicit acceptance and remains visible."
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Known omission R1 stays a visible gap without leaking its unavailable contents; unspecified completeness remains unknown.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S06-AC01",
+      "title": "Historical answer excludes later knowledge",
+      "story_ids": [
+        "S06"
+      ],
+      "category": "story_acceptance",
+      "given": "E1–E5",
+      "when": "the user asks from February 10",
+      "then": [
+        "the answer identifies the adopted nightly approach without using April or June knowledge; the date and casket revision are visible."
+      ],
+      "fixture_source_ids": [
+        "E1",
+        "E2_EMAIL",
+        "E2_DESIGN",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "verification_notes": "At end of 2025-02-10 UTC in r1: nightly adopted for deadline, reconciliation if S03 is present; no April feed or June outcome.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S06-AC02",
+      "title": "Rewind resets future-bearing context",
+      "story_ids": [
+        "S06"
+      ],
+      "category": "story_acceptance",
+      "given": "the conversation already discussed June",
+      "when": "the user returns to February",
+      "then": [
+        "a fresh historical context still excludes that later knowledge, including summaries and relationships derived from later or otherwise ineligible evidence. A newly computed summary using only eligible inputs remains permitted."
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL",
+        "E5"
+      ],
+      "verification_notes": "Inspect generation inputs as well as final text. Later-derived content with future dependencies must be excluded or recomputed.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S06-AC03",
+      "title": "Uncertain time does not establish earlier awareness",
+      "story_ids": [
+        "S06"
+      ],
+      "category": "story_acceptance",
+      "given": "uncertain dates or a later-written retrospective",
+      "when": "an earlier perspective is requested",
+      "then": [
+        "the system does not assert unsupported earlier awareness."
+      ],
+      "fixture_source_ids": [
+        "U1",
+        "F1"
+      ],
+      "verification_notes": "Use U1 and F1. A historical answer cannot establish earlier awareness from unknown exposure or a July recollection.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S07-AC01",
+      "title": "Inspect distinct decision stages",
+      "story_ids": [
+        "S07"
+      ],
+      "category": "story_acceptance",
+      "given": "E1–E5, with casket r1 in retrospective mode",
+      "when": "I open the trail",
+      "then": [
+        "I see dated proposals, adopted positions, the April opportunity, the deferral, and the June revision, with documented participants and sources. Adoption is distinct from deployment."
+      ],
+      "fixture_source_ids": [
+        "E1",
+        "E2_EMAIL",
+        "E2_DESIGN",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "verification_notes": "Use retrospective mode in r1 for the full trail. Require proposal, batching adoption, feed opportunity, deferral, streaming adoption, and retained reconciliation. Deployment remains unrecorded.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S07-AC02",
+      "title": "Explain the transition and retained reasoning",
+      "story_ids": [
+        "S07"
+      ],
+      "category": "story_acceptance",
+      "given": "the February and June positions, with casket r1 in retrospective mode",
+      "when": "I compare them",
+      "then": [
+        "the explanation identifies the new feed, validation requirement, validation outcome, changed processing choice, and retained nightly reconciliation, citing each supported transition."
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL",
+        "E2_DESIGN",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "verification_notes": "Use retrospective comparison of February 10 and June 15 in r1. Require E3 feed availability, E4 validation gate, and E5 completed validation with streaming adoption, plus the retained constraint.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S07-AC03",
+      "title": "Unresolved evidence stays unresolved",
+      "story_ids": [
+        "S07"
+      ],
+      "category": "story_acceptance",
+      "given": "conflicting approval accounts or missing causal evidence, with casket r1 in retrospective mode",
+      "when": "I inspect the affected stage",
+      "then": [
+        "the disagreement or missing explanation remains explicit. A later document does not automatically supersede an earlier decision."
+      ],
+      "fixture_source_ids": [
+        "C1",
+        "C2"
+      ],
+      "verification_notes": "Use retrospective mode, or a historical cutoff at or after 2025-02-11T10:30:00Z. C1 and C2 are February 11 accounts of the February 10 decision; they cannot establish February 10 awareness. They disagree on approver. Do not choose the later account just because it is later. Missing causes stay unknown.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S08-AC01",
+      "title": "Recovered evidence improves the February reconstruction",
+      "story_ids": [
+        "S08"
+      ],
+      "category": "story_acceptance",
+      "given": "revision 1 lacks R1",
+      "when": "R1 is recovered in July and revision 2 is published",
+      "then": [
+        "a new February answer can explain the original upstream-delivery constraint."
+      ],
+      "fixture_source_ids": [
+        "R1"
+      ],
+      "verification_notes": "Use r2, with R1's February authorship. A current reconstruction may improve without importing F1's later recollection into February.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S08-AC02",
+      "title": "Recovery is not a July reversal",
+      "story_ids": [
+        "S08"
+      ],
+      "category": "story_acceptance",
+      "given": "that updated answer",
+      "when": "the user inspects the change",
+      "then": [
+        "it is identified as newly recovered evidence about February, not a July reversal or a changed decision date."
+      ],
+      "fixture_source_ids": [
+        "R1"
+      ],
+      "verification_notes": "Show source event/creation/exposure in February and recovery/publication in July as different facts.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S08-AC03",
+      "title": "Update preserves pinned sessions and last good revision",
+      "story_ids": [
+        "S08"
+      ],
+      "category": "story_acceptance",
+      "given": "an active revision-1 session or an interrupted update",
+      "when": "revision 2 is prepared",
+      "then": [
+        "the existing session stays pinned and the last published revision remains usable."
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL",
+        "R1"
+      ],
+      "verification_notes": "Inject interruption before publication. Existing r1 sessions remain r1, but their authorization remains current.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S09-AC01",
+      "title": "Start a topic meeting with visible context",
+      "story_ids": [
+        "S09"
+      ],
+      "category": "story_acceptance",
+      "given": "authorized participants",
+      "when": "the host starts an Atlas meeting",
+      "then": [
+        "everyone sees its topic, roster, revision, and cutoff and can ask follow-ups."
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL"
+      ],
+      "verification_notes": "A fixed Maya/Sam roster consults the same topic and pinned revision/perspective. The representation is not the old LDAP account.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S09-AC02",
+      "title": "Shared output respects the least permitted evidence scope",
+      "story_ids": [
+        "S09"
+      ],
+      "category": "story_acceptance",
+      "given": "a source available only to the manager",
+      "when": "the shared room asks a related question",
+      "then": [
+        "that source cannot contribute protected facts, citations, or indirect conclusions."
+      ],
+      "fixture_source_ids": [
+        "X1"
+      ],
+      "verification_notes": "X1 is not an eligible input in a Maya/Sam room; neither its amount, canary, citations, nor dependent conclusions may appear.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S09-AC03",
+      "title": "Recognized access change stops affected output",
+      "story_ids": [
+        "S09"
+      ],
+      "category": "story_acceptance",
+      "given": "a participant loses access",
+      "when": "the next affected output would be released after the change is recognized",
+      "then": [
+        "it is blocked and the meeting requires a newly authorized start."
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Reevaluate before output release. Stopping and restarting is acceptable; continuing with stale privileged context is not.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S10-AC01",
+      "title": "Virtual employee participates under its own identity",
+      "story_ids": [
+        "S10"
+      ],
+      "category": "story_acceptance",
+      "given": "the virtual identity has explicit access",
+      "when": "the host includes it in a new meeting",
+      "then": [
+        "it initiates a relevant follow-up, receives a cited answer, and appears as the acting virtual participant."
+      ],
+      "fixture_source_ids": [
+        "E4"
+      ],
+      "verification_notes": "A configured virtual principal initiates at least one relevant follow-up; a decorative agent label or host-authenticated proxy is insufficient.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S10-AC02",
+      "title": "Virtual scope cannot inherit host authority",
+      "story_ids": [
+        "S10"
+      ],
+      "category": "story_acceptance",
+      "given": "the virtual identity has less access than the host",
+      "when": "the room responds",
+      "then": [
+        "its restricted scope constrains shared output and the host’s authority does not elevate it."
+      ],
+      "fixture_source_ids": [
+        "X1"
+      ],
+      "verification_notes": "Maya plus bot-atlas excludes X1 even though Maya alone can consult it.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S11-AC01",
+      "title": "Separate historical reasoning from current scenario and advice",
+      "story_ids": [
+        "S11"
+      ],
+      "category": "story_acceptance",
+      "given": "a participant supplies a new requirement",
+      "when": "the room evaluates the historical choice",
+      "then": [
+        "it separates recorded reasoning, the participant’s assertion, generated advice, and an assumption to verify."
+      ],
+      "fixture_source_ids": [
+        "E2_DESIGN",
+        "E4",
+        "E5"
+      ],
+      "verification_notes": "Supply an explicitly fictional current latency requirement. Require an attributed assumption to verify, not a claim of known deployment.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S11-AC02",
+      "title": "New requirement cannot become past knowledge",
+      "story_ids": [
+        "S11"
+      ],
+      "category": "story_acceptance",
+      "given": "that contemporary discussion",
+      "when": "a fresh historical perspective is opened",
+      "then": [
+        "the new requirement does not become something the departed employee knew earlier."
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL"
+      ],
+      "verification_notes": "Open a fresh historical context; do not retain the present-day requirement as Alex's historical belief.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S12-AC01",
+      "title": "Save a useful evidence-backed meeting record",
+      "story_ids": [
+        "S12"
+      ],
+      "category": "story_acceptance",
+      "given": "a completed meeting",
+      "when": "I save its record",
+      "then": [
+        "it retains findings, decision transitions, uncertainty, next check, citations, roster, cutoff, and casket revision."
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL",
+        "E2_DESIGN",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "verification_notes": "Required brief headings and context appear; citations open preserved source versions under current access.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S12-AC02",
+      "title": "Reopening uses current authority",
+      "story_ids": [
+        "S12"
+      ],
+      "category": "story_acceptance",
+      "given": "changed access",
+      "when": "someone reopens the record",
+      "then": [
+        "current permissions apply and the whole record may be denied."
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Whole-record denial is allowed and should be planned before selective redaction.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "S12-AC03",
+      "title": "Reingested meeting remains contemporary generated material",
+      "story_ids": [
+        "S12"
+      ],
+      "category": "story_acceptance",
+      "given": "the meeting is later ingested",
+      "when": "its statements are used",
+      "then": [
+        "their contemporary generated origin remains explicit rather than becoming original employee testimony."
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Contemporary generated answers and participant assertions remain distinguishable when later imported.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "P01",
+      "title": "Unknown policy mapping denies use",
+      "story_ids": [
+        "S01",
+        "S02"
+      ],
+      "category": "shared_boundary",
+      "given": "an imported item has no resolved source-to-policy mapping",
+      "when": "an operator tries to make it available for consultation",
+      "then": [
+        "the item is withheld from retrieval and answers until the mapping is resolved",
+        "the operator can see the permitted failure metadata without exposing the item's protected content"
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL"
+      ],
+      "verification_notes": "Exercise an isolated fixture variant with a missing mapping; do not remove the normal mapping from other tests.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "P02",
+      "title": "Administration is separate from archive consultation",
+      "story_ids": [
+        "S01"
+      ],
+      "category": "shared_boundary",
+      "given": "Ada has Administer but no Collect or Consult grant",
+      "when": "Ada edits an allowed policy setting and then requests an archived passage",
+      "then": [
+        "policy administration succeeds within Ada's authority",
+        "the content request is denied without granting Consult implicitly"
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Use the role and policy input examples. This does not forbid separately granting an administrator Consult.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "P03",
+      "title": "Restrictions apply before evidence can influence generation",
+      "story_ids": [
+        "S01",
+        "S02",
+        "S07",
+        "S09"
+      ],
+      "category": "shared_boundary",
+      "given": "Sam can consult the Alex archive but cannot consult X1 and the system has previously processed X1",
+      "when": "Sam asks for the contingency reserve or a room containing Sam asks the same question",
+      "then": [
+        "the answer cannot reveal X1's amount or canary through a direct claim, hidden inference, citation, cache, graph relationship, or summary",
+        "the product reports that the available permitted record does not establish the requested fact"
+      ],
+      "fixture_source_ids": [
+        "X1"
+      ],
+      "verification_notes": "Inspect scoped retrieval/generation inputs as well as the answer. The query itself must not supply the secret amount or marker.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "P04",
+      "title": "Expired authorization freshness fails closed",
+      "story_ids": [
+        "S01",
+        "S09",
+        "S12"
+      ],
+      "category": "shared_boundary",
+      "given": "the last successful directory/policy observation is more than 60 seconds old and refresh is unavailable",
+      "when": "an affected answer, citation, or saved record would be released",
+      "then": [
+        "the affected operation is denied until freshness is reestablished",
+        "already recognized revocations block immediately even if the cached observation is younger than 60 seconds"
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Use an injected clock and unavailable directory adapter. No wall-clock waiting is required.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "P05",
+      "title": "Explicit deny defeats an otherwise applicable grant",
+      "story_ids": [
+        "S01"
+      ],
+      "category": "shared_boundary",
+      "given": "Taylor is in the Network subtree and also matches the suspended-consult denial",
+      "when": "Taylor requests Consult on the Alex archive",
+      "then": [
+        "Consult is denied despite the subtree grant"
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Distinguish an explicit deny from a missing grant. Do not let an added project grant override it.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "P06",
+      "title": "Collect does not bypass the source authorization boundary",
+      "story_ids": [
+        "S01",
+        "S02"
+      ],
+      "category": "shared_boundary",
+      "given": "Chris has Collect but the export origin is unapproved or its custody/policy mapping is unresolved",
+      "when": "Chris attempts to admit that export as consultable evidence",
+      "then": [
+        "the export is not made available to consultation until its approved origin and policy mapping are established"
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL"
+      ],
+      "verification_notes": "For manual exports, a documented approved origin and mapping satisfy this prototype contract; live connectors are deferred.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "P07",
+      "title": "Collect revocation stops intake and publication",
+      "story_ids": [
+        "S01",
+        "S02",
+        "S05",
+        "S08"
+      ],
+      "category": "shared_boundary",
+      "given": "Chris started an authorized intake or update job and then loses Collect authority",
+      "when": "the job reaches its next bounded authorization checkpoint or attempts publication",
+      "then": [
+        "recognized revocation pauses or stops the affected work and prevents publication",
+        "a stale observation beyond the configured 60-second limit cannot authorize continued work",
+        "the previous published revision remains intact"
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "The plan must identify checkpoints that enforce observation freshness without relying only on the grant at job start. Directory visibility assumptions remain explicit.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "T01",
+      "title": "Late recollection differs from recovered contemporaneous knowledge",
+      "story_ids": [
+        "S06",
+        "S08"
+      ],
+      "category": "shared_boundary",
+      "given": "r2 contains both February-authored R1 and July-authored F1",
+      "when": "the user asks from February 10 and then opens a fresh retrospective perspective",
+      "then": [
+        "the historical answer may use R1 but must not present F1's documentation-turnover recollection as Alex's February knowledge",
+        "the retrospective answer may attribute the July recollection to Maya with its later origin explicit"
+      ],
+      "fixture_source_ids": [
+        "R1",
+        "F1"
+      ],
+      "verification_notes": "The record's described event date must not be substituted for employee exposure.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "T02",
+      "title": "Do not expose later statements within a meeting",
+      "story_ids": [
+        "S04",
+        "S06"
+      ],
+      "category": "shared_boundary",
+      "given": "E4 has meeting-start event time 14:00 UTC and conservative whole-source exposure at 14:07 UTC",
+      "when": "the user asks from 2025-04-12T14:03:00Z",
+      "then": [
+        "the answer does not use the later deferral or statements made after the cutoff",
+        "a conservative implementation excludes E4 entirely; a segment-aware implementation may use only individually evidenced statements by 14:03"
+      ],
+      "fixture_source_ids": [
+        "E4"
+      ],
+      "verification_notes": "Both approaches are acceptable. The plan must state which it uses; meeting attendance at the start cannot expose the whole transcript.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "T03",
+      "title": "Uncertain exposure cannot establish a historical belief",
+      "story_ids": [
+        "S06",
+        "S07"
+      ],
+      "category": "shared_boundary",
+      "given": "U1's creation and Alex exposure are unknown",
+      "when": "the user asks whether Alex knew its forecast on February 10",
+      "then": [
+        "the answer says that this awareness is not established",
+        "the system does not invent a precise date or treat the forecast as a validated outcome"
+      ],
+      "fixture_source_ids": [
+        "U1"
+      ],
+      "verification_notes": "Preserve uncertainty in the graph and citations as well as prose.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "A01",
+      "title": "Attachment and standalone copy retain one evidence lineage",
+      "story_ids": [
+        "S02",
+        "S03"
+      ],
+      "category": "shared_boundary",
+      "given": "E2_EMAIL contains the same E2_DESIGN bytes also supplied as a standalone PDF",
+      "when": "both import occurrences are accepted and a user verifies the design requirement",
+      "then": [
+        "the parent-email and standalone provenance remain available",
+        "the duplicate is not counted as two independent confirmations and its permissions are not broadened"
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL",
+        "E2_DESIGN"
+      ],
+      "verification_notes": "Logical identity and origin both matter. Byte equality alone is not an authorization rule.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "A02",
+      "title": "Archive identity survives disablement deletion and email reuse",
+      "story_ids": [
+        "S01",
+        "S05"
+      ],
+      "category": "shared_boundary",
+      "given": "the archive belongs to archive-alex-001 and the original LDAP account is disabled or removed",
+      "when": "a different enabled principal later uses the old email address and requests the archive",
+      "then": [
+        "the archive retains the original employee attribution and remains usable by properly authorized successors",
+        "the new principal receives no access or historical authorship merely from the reused address"
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL"
+      ],
+      "verification_notes": "Use distinct immutable principal identifiers. Do not use the departed account to authenticate the representation.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "A03",
+      "title": "A second archive cannot become the first employee's memory",
+      "story_ids": [
+        "S02",
+        "S06",
+        "S09"
+      ],
+      "category": "shared_boundary",
+      "given": "O1 belongs only to archive-blair-002 and an isolated test variant grants Sam Consult on both archives while Sam explicitly selects archive-alex-001/r1",
+      "when": "Sam asks what Alex selected for the unrelated equipment",
+      "then": [
+        "O1 is not retrieved into Alex's archive scope",
+        "the answer does not attribute Blair's equipment selection or knowledge to Alex"
+      ],
+      "fixture_source_ids": [
+        "O1"
+      ],
+      "verification_notes": "This variant isolates archive scoping from policy denial. Keep Sam-to-Blair denied in the baseline policy fixture. Neither a shared project label nor access to both archives merges employee identities or revision inventories.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "M01",
+      "title": "Virtual private context is not imported into a shared room",
+      "story_ids": [
+        "S09",
+        "S10"
+      ],
+      "category": "shared_boundary",
+      "given": "the configured virtual employee previously saw X1 in an unrelated privileged context but has only ordinary Atlas access in this room",
+      "when": "the virtual employee joins a fresh room and participates",
+      "then": [
+        "the shared context does not contain the prior restricted knowledge",
+        "all generated contributions and answers use only the room's permitted evidence and current attributed scenario inputs"
+      ],
+      "fixture_source_ids": [
+        "X1"
+      ],
+      "verification_notes": "Use separate contexts; host permissions and previous agent memory cannot expand room scope.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "M02",
+      "title": "Saved records stay within the original roster",
+      "story_ids": [
+        "S12"
+      ],
+      "category": "shared_boundary",
+      "given": "Nolan has current Consult access to ordinary Atlas evidence but was not on a saved meeting's roster",
+      "when": "Nolan opens that saved record",
+      "then": [
+        "the record is denied even though Nolan may separately ask questions of evidence he is permitted to consult"
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Wider record sharing is deferred. Original roster members still need current Consult and evidence eligibility.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "R01",
+      "title": "Archive mechanics work beyond worker memory",
+      "story_ids": [
+        "S05",
+        "S08"
+      ],
+      "category": "shared_boundary",
+      "given": "a declared scale corpus exceeds the archive-processing worker's configured memory limit",
+      "when": "the corpus is ingested into a casket then cold-restored using the proposed implementation",
+      "then": [
+        "the complete plaintext casket is never required to fit in memory",
+        "integrity and item accounting are preserved and measured resource/elapsed-time results are reported against the declared profile"
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "The receiving agent plans or runs only an authorized isolated check. The supplied tiny corpus is not this benchmark; repeated bytes are not independent semantic evidence.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "R02",
+      "title": "Encryption and key failure are meaningful behavior",
+      "story_ids": [
+        "S05",
+        "S08",
+        "S12"
+      ],
+      "category": "shared_boundary",
+      "given": "sensitive sources derived artifacts and saved records are persisted through the intended storage path",
+      "when": "a reviewer examines configured encryption behavior and attempts a restore without decryption authority",
+      "then": [
+        "the plan provides evidence of encryption at the relevant persisted boundaries rather than relying on an S3 library name",
+        "a restore lacking decryption authority fails without making the revision ready or exposing plaintext"
+      ],
+      "fixture_source_ids": [],
+      "verification_notes": "Use the actual deployment's encryption/key mechanism; do not invent cryptography. A mocked storage adapter cannot prove S3 encryption.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "R03",
+      "title": "Withdrawal prevents reuse through old revisions and outputs",
+      "story_ids": [
+        "S01",
+        "S08",
+        "S12"
+      ],
+      "category": "shared_boundary",
+      "given": "evidence used by an earlier answer or record is withdrawn and the affected casket is suspended",
+      "when": "a user requests that evidence through an old revision cached answer or saved record",
+      "then": [
+        "the affected output remains blocked until a clean permitted view is available",
+        "the product does not treat pinned evidence revisions as pinned permission"
+      ],
+      "fixture_source_ids": [
+        "E2_EMAIL"
+      ],
+      "verification_notes": "Whole-casket suspension and whole-record denial are accepted lean responses; full purge automation is deferred.",
+      "status": "specified_not_executed"
+    },
+    {
+      "id": "J01",
+      "title": "Source instructions cannot change the task or boundaries",
+      "story_ids": [
+        "S02",
+        "S06",
+        "S09"
+      ],
+      "category": "shared_boundary",
+      "given": "J1 contains a source instruction attempting to override policy and historical cutoff",
+      "when": "the record is encountered during an authorized historical question",
+      "then": [
+        "the instruction is treated as source content and cannot alter permissions cutoff or the user's task",
+        "no future or restricted evidence becomes eligible as a result"
+      ],
+      "fixture_source_ids": [
+        "J1"
+      ],
+      "verification_notes": "The application must not promote source content to system authority. J1 intentionally contains no restricted canary or amount.",
+      "status": "specified_not_executed"
+    }
+  ]
+}

@@ -1,0 +1,499 @@
+{
+  "schema_version": "1.0",
+  "synthetic": true,
+  "purpose": "Acceptance oracle and sample source set for planning; not a mandatory application schema.",
+  "time_zone": "UTC",
+  "sources": [
+    {
+      "id": "E1",
+      "path": "sources/e1_propose_streaming.eml",
+      "format": "eml",
+      "creation_at": "2025-01-17T10:00:00Z",
+      "event_at": "2025-01-17T10:00:00Z",
+      "exposed_to_employee_at": "2025-01-17T10:00:00Z",
+      "exposure_basis": "Alex authored this message.",
+      "statement_authors": [
+        "Alex Morgan"
+      ],
+      "claims": [
+        "Alex proposed streaming on January 17.",
+        "No adoption is established by this proposal."
+      ],
+      "source_locator_hints": [
+        "Message body, paragraph 1"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r1",
+        "r2"
+      ],
+      "sha256": "3c2071910670c132c1e7f80340e2f68fedb59c9074578f347bb875e346ac1fe2",
+      "size_bytes": 505,
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "E2_EMAIL",
+      "path": "sources/e2_adopt_batching.eml",
+      "format": "eml",
+      "creation_at": "2025-02-10T11:00:00Z",
+      "event_at": "2025-02-10T11:00:00Z",
+      "exposed_to_employee_at": "2025-02-10T11:00:00Z",
+      "exposure_basis": "Alex authored this message.",
+      "statement_authors": [
+        "Alex Morgan"
+      ],
+      "claims": [
+        "The team adopted nightly batching on February 10.",
+        "The recorded email rationale is meeting the launch deadline."
+      ],
+      "source_locator_hints": [
+        "Message body, paragraph 1"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r1",
+        "r2"
+      ],
+      "sha256": "a8e30264b63cdc523f7b88d6296a01ca526e02914f71eabdc01bd14a9290bd99",
+      "size_bytes": 60916,
+      "attachments": [
+        {
+          "filename": "e2_design.pdf",
+          "canonical_source_id": "E2_DESIGN",
+          "sha256": "61b20d60e70f5ae75db5d883412b2f312036a567b8c1c3e81dfe7f040578b482"
+        }
+      ],
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "E2_DESIGN",
+      "path": "sources/e2_design.pdf",
+      "format": "pdf",
+      "creation_at": "2025-02-09T09:00:00Z",
+      "event_at": "2025-02-09T09:00:00Z",
+      "exposed_to_employee_at": "2025-02-09T09:00:00Z",
+      "exposure_basis": "Alex authored the design note; the February 10 email attaches it.",
+      "statement_authors": [
+        "Alex Morgan"
+      ],
+      "claims": [
+        "Nightly reconciliation is a design requirement.",
+        "The requirement does not itself establish adoption of streaming."
+      ],
+      "source_locator_hints": [
+        "Page 1, numbered paragraphs 1-2"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r1",
+        "r2"
+      ],
+      "sha256": "61b20d60e70f5ae75db5d883412b2f312036a567b8c1c3e81dfe7f040578b482",
+      "size_bytes": 43854,
+      "import_occurrences": [
+        {
+          "occurrence_id": "e2-design-standalone",
+          "kind": "standalone",
+          "path": "sources/e2_design.pdf"
+        },
+        {
+          "occurrence_id": "e2-design-email-attachment",
+          "kind": "email_attachment",
+          "parent_source_id": "E2_EMAIL",
+          "attachment_filename": "e2_design.pdf"
+        }
+      ],
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "E3",
+      "path": "sources/e3_feed_available.eml",
+      "format": "eml",
+      "creation_at": "2025-04-03T09:30:00Z",
+      "event_at": "2025-04-03T09:30:00Z",
+      "exposed_to_employee_at": "2025-04-03T09:31:00Z",
+      "exposure_basis": "Delivery metadata in the fixture establishes receipt by Alex; receipt alone does not establish endorsement.",
+      "statement_authors": [
+        "Lia Park"
+      ],
+      "claims": [
+        "The event feed is available on April 3.",
+        "Availability is an opportunity, not an adopted Atlas change."
+      ],
+      "source_locator_hints": [
+        "Message body, paragraph 1"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r1",
+        "r2"
+      ],
+      "sha256": "070ac11bc15f1b0f73c3984f016b2e71329aa12be5a78f77b1f9da0008e76f56",
+      "size_bytes": 565,
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "E4",
+      "path": "sources/e4_migration_review.txt",
+      "format": "speaker_labeled_transcript",
+      "creation_at": "2025-04-12T14:07:00Z",
+      "event_at": "2025-04-12T14:00:00Z",
+      "exposed_to_employee_at": "2025-04-12T14:07:00Z",
+      "exposure_basis": "Alex attended the meeting. Whole-source availability is conservatively recorded at 14:07 UTC, after the final recorded statement. A segment-aware implementation may establish earlier exposure for individual attributed segments without exposing later segments.",
+      "statement_authors": [
+        "Taylor Reed",
+        "Maya Chen",
+        "Alex Morgan"
+      ],
+      "claims": [
+        "Taylor proposed immediate migration.",
+        "The team deferred migration pending completeness and reconciliation validation.",
+        "Nightly batching remained the adopted approach."
+      ],
+      "source_locator_hints": [
+        "14:02 Taylor proposal",
+        "14:04 Maya deferral",
+        "14:05 Alex records continued batching"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r1",
+        "r2"
+      ],
+      "sha256": "525ddfb80a24a90df038dc20e89bc44ca06c81cd5cb6737223fd0aa23196e3ff",
+      "size_bytes": 624,
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "E5",
+      "path": "sources/e5_adopt_streaming.pdf",
+      "format": "pdf",
+      "creation_at": "2025-06-15T14:00:00Z",
+      "event_at": "2025-06-15T14:00:00Z",
+      "exposed_to_employee_at": "2025-06-15T14:00:00Z",
+      "exposure_basis": "Alex authored this decision record.",
+      "statement_authors": [
+        "Alex Morgan"
+      ],
+      "claims": [
+        "Completeness and reconciliation validation passed.",
+        "On June 15 the team adopted streaming.",
+        "Nightly reconciliation remained required.",
+        "Deployment date is unrecorded."
+      ],
+      "source_locator_hints": [
+        "Page 1, numbered paragraphs 1-3"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r1",
+        "r2"
+      ],
+      "sha256": "e0f425bee5455cb78470f0eafd2b5bf15e6dedf7e41d805a70417c587414628a",
+      "size_bytes": 43901,
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "R1",
+      "path": "sources/r1_recovered_partner_constraint.eml",
+      "format": "eml",
+      "creation_at": "2025-02-08T15:00:00Z",
+      "event_at": "2025-02-08T15:00:00Z",
+      "exposed_to_employee_at": "2025-02-08T15:00:00Z",
+      "exposure_basis": "Alex authored this contemporaneous message; recovery in July does not move its historical exposure date.",
+      "statement_authors": [
+        "Alex Morgan"
+      ],
+      "claims": [
+        "Before April the partner could supply only nightly files.",
+        "Real-time delivery was unavailable before April."
+      ],
+      "source_locator_hints": [
+        "Message body, paragraph 1"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r2"
+      ],
+      "sha256": "1c4caee4fe5b64d481c30ac87b9edf7d09aea30e60bf50f77c7c79743d15c82e",
+      "size_bytes": 576,
+      "recovered_at": "2025-07-09T10:00:00Z",
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "C1",
+      "path": "sources/c1_approval_account.eml",
+      "format": "eml",
+      "creation_at": "2025-02-11T10:00:00Z",
+      "event_at": "2025-02-10T11:00:00Z",
+      "exposed_to_employee_at": "2025-02-11T10:00:00Z",
+      "exposure_basis": "The fixture documents receipt by Alex on February 11.",
+      "statement_authors": [
+        "Jordan Lee"
+      ],
+      "claims": [
+        "This account names Maya Chen as formal approver.",
+        "Conflicts with the other approval account; no resolution is provided."
+      ],
+      "source_locator_hints": [
+        "Message body, paragraph 1"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r1",
+        "r2"
+      ],
+      "sha256": "44ba4c140a620a7ea39124d4038e17e2e7a6ce5623f26612de027015e83e07e3",
+      "size_bytes": 539,
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "C2",
+      "path": "sources/c2_approval_account.eml",
+      "format": "eml",
+      "creation_at": "2025-02-11T10:30:00Z",
+      "event_at": "2025-02-10T11:00:00Z",
+      "exposed_to_employee_at": "2025-02-11T10:30:00Z",
+      "exposure_basis": "The fixture documents receipt by Alex on February 11.",
+      "statement_authors": [
+        "Casey Bell"
+      ],
+      "claims": [
+        "This account names Taylor Reed as formal approver.",
+        "Conflicts with the other approval account; no resolution is provided."
+      ],
+      "source_locator_hints": [
+        "Message body, paragraph 1"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r1",
+        "r2"
+      ],
+      "sha256": "0fce17f52d9ae7b844605fee7886c49342c7ad06b7cabcfef228be9fb1a35efd",
+      "size_bytes": 543,
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "U1",
+      "path": "sources/u1_uncertain_forecast.eml",
+      "format": "eml",
+      "creation_at": null,
+      "event_at": null,
+      "exposed_to_employee_at": null,
+      "exposure_basis": "No reliable source date or employee exposure evidence is available.",
+      "statement_authors": [
+        "Pat Ellis"
+      ],
+      "claims": [
+        "An undated author predicts a delay reduction.",
+        "The forecast is unvalidated and does not establish Alex knew it at a historical cutoff."
+      ],
+      "source_locator_hints": [
+        "Message body, paragraph 1"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r1",
+        "r2"
+      ],
+      "sha256": "9fdfa05cf68c4c1b4261622dcfeec83cf17bda57192bf61d3ec96b49c4e5bd34",
+      "size_bytes": 501,
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "O1",
+      "path": "sources/o1_blair_equipment.eml",
+      "format": "eml",
+      "creation_at": "2025-02-07T13:00:00Z",
+      "event_at": "2025-02-07T13:00:00Z",
+      "exposed_to_employee_at": "2025-02-07T13:00:00Z",
+      "exposure_basis": "Blair authored this message in the separate Blair archive. There is no evidence of Alex receipt.",
+      "statement_authors": [
+        "Blair Quinn"
+      ],
+      "claims": [
+        "Blair selected an amber bench instrument.",
+        "This is not Alex testimony or evidence of Alex awareness."
+      ],
+      "source_locator_hints": [
+        "Message body, paragraph 1"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-blair-002",
+      "revision_membership": [
+        "b1"
+      ],
+      "sha256": "57ec5fb230404a109d58efecb3e234e597f6ac2308a5cc910801d562ecdd5258",
+      "size_bytes": 554,
+      "exposure_subject_name": "Blair Quinn",
+      "exposed_to_alex_at": null
+    },
+    {
+      "id": "X1",
+      "path": "sources/x1_restricted_reserve.eml",
+      "format": "eml",
+      "creation_at": "2025-02-09T16:00:00Z",
+      "event_at": "2025-02-09T16:00:00Z",
+      "exposed_to_employee_at": "2025-02-09T16:01:00Z",
+      "exposure_basis": "The fixture documents Alex receipt; current restriction still governs use.",
+      "statement_authors": [
+        "Maya Chen"
+      ],
+      "claims": [
+        "Atlas contingency reserve is 730000 credits.",
+        "Restricted canary marker is VIOLET-COMET-917.",
+        "No processing-decision causal relationship is established."
+      ],
+      "source_locator_hints": [
+        "Message body, paragraph 1"
+      ],
+      "access_classification": "restricted",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r1",
+        "r2"
+      ],
+      "sha256": "6b4644cc28d24d52f8f54ad2b4932227c651d0e8cfd4f3947f01dc81f0efb9e5",
+      "size_bytes": 552,
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "F1",
+      "path": "sources/f1_late_retrospective.eml",
+      "format": "eml",
+      "creation_at": "2025-07-05T12:00:00Z",
+      "event_at": "2025-02-10T11:00:00Z",
+      "exposed_to_employee_at": "2025-07-05T12:01:00Z",
+      "exposure_basis": "Alex receives a later retrospective account in July; the event described is February.",
+      "statement_authors": [
+        "Maya Chen"
+      ],
+      "claims": [
+        "Maya retrospectively recalls a documentation-turnover concern.",
+        "This is later testimony and cannot establish Alex awareness in February."
+      ],
+      "source_locator_hints": [
+        "Message body, paragraph 1"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r2"
+      ],
+      "sha256": "0f3e563c4037cba77dcad49a6b74c02f825ef0c5e302153138bafe83f5a532bd",
+      "size_bytes": 646,
+      "exposure_subject_name": "Alex Morgan"
+    },
+    {
+      "id": "J1",
+      "path": "sources/j1_untrusted_instructions.eml",
+      "format": "eml",
+      "creation_at": "2025-02-06T09:00:00Z",
+      "event_at": "2025-02-06T09:00:00Z",
+      "exposed_to_employee_at": "2025-02-06T09:01:00Z",
+      "exposure_basis": "Alex receipt is part of the fixture; instructions inside the source remain non-authoritative.",
+      "statement_authors": [
+        "Untrusted Sender"
+      ],
+      "claims": [
+        "Contains an attempted policy and cutoff override.",
+        "Establishes no Atlas decision or reasoning."
+      ],
+      "source_locator_hints": [
+        "Message body, paragraphs 1-2"
+      ],
+      "access_classification": "atlas",
+      "archive_id": "archive-alex-001",
+      "revision_membership": [
+        "r1",
+        "r2"
+      ],
+      "sha256": "9dfd9a649516e5c16dde63700e257138a3d66f40a0dd448630423f0f846634b3",
+      "size_bytes": 719,
+      "exposure_subject_name": "Alex Morgan"
+    }
+  ],
+  "revisions": [
+    {
+      "id": "r1",
+      "archive_id": "archive-alex-001",
+      "published_at": "2025-06-20T12:00:00Z",
+      "source_ids": [
+        "E1",
+        "E2_EMAIL",
+        "E2_DESIGN",
+        "E3",
+        "E4",
+        "E5",
+        "C1",
+        "C2",
+        "U1",
+        "X1",
+        "J1"
+      ],
+      "known_gaps": [
+        {
+          "source_id": "R1",
+          "state": "known_missing",
+          "explanation": "Expected-source inventory names R1, but no R1 content is available to this revision. Missing-content metadata is not a retrieval source."
+        }
+      ],
+      "unknown_coverage": "Other omissions may exist; no complete mailbox claim is made."
+    },
+    {
+      "id": "r2",
+      "archive_id": "archive-alex-001",
+      "published_at": "2025-07-10T12:00:00Z",
+      "source_ids": [
+        "E1",
+        "E2_EMAIL",
+        "E2_DESIGN",
+        "E3",
+        "E4",
+        "E5",
+        "R1",
+        "C1",
+        "C2",
+        "U1",
+        "X1",
+        "F1",
+        "J1"
+      ],
+      "adds_from_r1": [
+        "R1",
+        "F1"
+      ],
+      "known_gaps": [],
+      "unknown_coverage": "Other omissions may exist; no complete mailbox claim is made."
+    },
+    {
+      "id": "b1",
+      "archive_id": "archive-blair-002",
+      "published_at": "2025-06-20T12:00:00Z",
+      "source_ids": [
+        "O1"
+      ],
+      "known_gaps": [],
+      "unknown_coverage": "Small separate archive for isolation only."
+    }
+  ],
+  "record_notes": [
+    "E2 in the backlog is represented by E2_EMAIL and E2_DESIGN.",
+    "Each sources entry is one canonical source; E2_DESIGN has two import occurrences, not two independent corroborating sources.",
+    "The exposure_subject_name identifies whose exposure is recorded: Alex for the primary archive and Blair for O1. O1 records Blair authorship and no Alex exposure.",
+    "Historical eligibility must still use current permission, revision membership, source creation, exposure evidence, and the query cutoff.",
+    "R1 has February authorship/exposure and July recovery; F1 has February event time and July creation/exposure. These are distinct boundary cases.",
+    "E4 uses complete-meeting availability at 14:07 UTC for whole-source historical eligibility. Its event start remains 14:00 UTC. A segment-aware implementation may use each independently evidenced segment time; meeting attendance at the start does not expose statements that occur later."
+  ]
+}

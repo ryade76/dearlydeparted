@@ -1,0 +1,323 @@
+{
+  "schema_version": "1.0",
+  "purpose": "planning_input_not_implementation_status",
+  "source": "USER_STORIES.md",
+  "decisions": "DECISIONS.md",
+  "increments": [
+    {
+      "id": "A",
+      "outcome": "Explain an inherited decision from a restorable archive",
+      "stories": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "id": "B",
+      "outcome": "Explain how the decision evolved",
+      "stories": [
+        "S06",
+        "S07",
+        "S08"
+      ]
+    },
+    {
+      "id": "C",
+      "outcome": "Use recovered reasoning in a meeting",
+      "stories": [
+        "S09",
+        "S10",
+        "S11",
+        "S12"
+      ]
+    }
+  ],
+  "stories": [
+    {
+      "id": "S01",
+      "title": "Open the right door",
+      "statement": "As an administrator, I want organizational and project policies to grant Collect or Consult access, so authorized people can use the appropriate employee knowledge.",
+      "scope": "LDAP supplies current identities, groups, and available organizational attributes. The shared UI applies subtree, project, and evidence policies and explains an individual access decision.",
+      "increment": "A",
+      "prototype_required": true,
+      "depends_on": [],
+      "acceptance_ids": [
+        "S01-AC01",
+        "S01-AC02",
+        "S01-AC03"
+      ],
+      "shared_boundary_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "A02",
+        "R03"
+      ],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    },
+    {
+      "id": "S02",
+      "title": "Ask Alex why from the email record",
+      "statement": "As a successor, I want to ask about a decision preserved in approved email, so I can recover its documented rationale.",
+      "scope": "one declared email import format including attachment capture, one employee, question and answer, and source passage access.",
+      "increment": "A",
+      "prototype_required": true,
+      "depends_on": [
+        "S01"
+      ],
+      "acceptance_ids": [
+        "S02-AC01",
+        "S02-AC02",
+        "S02-AC03",
+        "S02-AC04"
+      ],
+      "shared_boundary_ids": [
+        "P01",
+        "P03",
+        "P06",
+        "P07",
+        "A01",
+        "A03",
+        "J01"
+      ],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    },
+    {
+      "id": "S03",
+      "title": "Bring the design document into the explanation",
+      "statement": "As a successor, I want design files considered alongside email, so I can recover constraints documented elsewhere.",
+      "scope": "one declared file format; no OCR or universal document browser.",
+      "increment": "A",
+      "prototype_required": true,
+      "depends_on": [
+        "S02"
+      ],
+      "acceptance_ids": [
+        "S03-AC01",
+        "S03-AC02"
+      ],
+      "shared_boundary_ids": [
+        "A01"
+      ],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    },
+    {
+      "id": "S04",
+      "title": "Recover what was said in the meeting",
+      "statement": "As a successor, I want meeting evidence attributed to its speakers, so I can distinguish recommendations, disagreement, and adopted decisions.",
+      "scope": "one speaker-labeled transcript format; no transcription service.",
+      "increment": "A",
+      "prototype_required": true,
+      "depends_on": [
+        "S02"
+      ],
+      "acceptance_ids": [
+        "S04-AC01",
+        "S04-AC02"
+      ],
+      "shared_boundary_ids": [
+        "T02"
+      ],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    },
+    {
+      "id": "S05",
+      "title": "Seal it and bring it back",
+      "statement": "As a custodian, I want the employee archive restored from the encrypted Mortuary, so consultation survives loss of the intake session and departed account.",
+      "scope": "publish and restore one identifiable casket revision; no storage console.",
+      "increment": "A",
+      "prototype_required": true,
+      "depends_on": [
+        "S02"
+      ],
+      "acceptance_ids": [
+        "S05-AC01",
+        "S05-AC02",
+        "S05-AC03"
+      ],
+      "shared_boundary_ids": [
+        "P07",
+        "A02",
+        "R01",
+        "R02"
+      ],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    },
+    {
+      "id": "S06",
+      "title": "Ask from the time it happened",
+      "statement": "As a successor, I want a historical cutoff, so I can understand the employee’s documented perspective without hindsight.",
+      "scope": "an as-of date, a retrospective mode, and fresh context when switching.",
+      "increment": "B",
+      "prototype_required": true,
+      "depends_on": [
+        "S02"
+      ],
+      "acceptance_ids": [
+        "S06-AC01",
+        "S06-AC02",
+        "S06-AC03"
+      ],
+      "shared_boundary_ids": [
+        "T01",
+        "T02",
+        "T03",
+        "A03",
+        "J01"
+      ],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    },
+    {
+      "id": "S07",
+      "title": "Follow the decision as it changes",
+      "statement": "As a successor, I want to follow and compare a decision’s stages, so I can understand what changed, why it changed, and which reasoning persisted.",
+      "scope": "one decision trail with a two-date comparison. A chronological list or table is enough.",
+      "increment": "B",
+      "prototype_required": true,
+      "depends_on": [
+        "S03",
+        "S04",
+        "S06"
+      ],
+      "acceptance_ids": [
+        "S07-AC01",
+        "S07-AC02",
+        "S07-AC03"
+      ],
+      "shared_boundary_ids": [
+        "P03",
+        "T03"
+      ],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    },
+    {
+      "id": "S08",
+      "title": "Recover the missing chapter",
+      "statement": "As a custodian, I want to add missed evidence to a new casket revision, so explanations improve while earlier sessions retain an identifiable evidence basis.",
+      "scope": "retrieve, add or reprocess selected material, and republish; one updater.",
+      "increment": "B",
+      "prototype_required": true,
+      "depends_on": [
+        "S05",
+        "S06"
+      ],
+      "acceptance_ids": [
+        "S08-AC01",
+        "S08-AC02",
+        "S08-AC03"
+      ],
+      "shared_boundary_ids": [
+        "P07",
+        "T01",
+        "R01",
+        "R02",
+        "R03"
+      ],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    },
+    {
+      "id": "S09",
+      "title": "Bring Alex into the room",
+      "statement": "As a host, I want a topic meeting with a fixed human roster and an employee representation, so colleagues can investigate the record together.",
+      "scope": "text, one representation, fixed participants, pinned revision and perspective.",
+      "increment": "C",
+      "prototype_required": true,
+      "depends_on": [
+        "S01",
+        "S02",
+        "S06"
+      ],
+      "acceptance_ids": [
+        "S09-AC01",
+        "S09-AC02",
+        "S09-AC03"
+      ],
+      "shared_boundary_ids": [
+        "P03",
+        "P04",
+        "A03",
+        "M01",
+        "J01"
+      ],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    },
+    {
+      "id": "S10",
+      "title": "Give the virtual colleague a seat",
+      "statement": "As a host, I want a separately authorized virtual employee to participate, so it can contribute questions within its permitted scope.",
+      "scope": "one configured virtual identity; no delegation chains or external actions.",
+      "increment": "C",
+      "prototype_required": true,
+      "depends_on": [
+        "S09"
+      ],
+      "acceptance_ids": [
+        "S10-AC01",
+        "S10-AC02"
+      ],
+      "shared_boundary_ids": [
+        "M01"
+      ],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    },
+    {
+      "id": "S11",
+      "title": "Test yesterday’s reasoning against today’s problem",
+      "statement": "As a participant, I want to supply a current requirement, so I can identify which historical assumptions still matter.",
+      "scope": "attributed scenario facts and generated advice; no autonomous execution.",
+      "increment": "C",
+      "prototype_required": true,
+      "depends_on": [
+        "S09"
+      ],
+      "acceptance_ids": [
+        "S11-AC01",
+        "S11-AC02"
+      ],
+      "shared_boundary_ids": [],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    },
+    {
+      "id": "S12",
+      "title": "Leave with the decision trail",
+      "statement": "As a host, I want a saved brief and transcript, so the recovered understanding remains useful after the meeting.",
+      "scope": "What we learned, How the decision evolved, What remains uncertain, and Next check.",
+      "increment": "C",
+      "prototype_required": true,
+      "depends_on": [
+        "S09"
+      ],
+      "acceptance_ids": [
+        "S12-AC01",
+        "S12-AC02",
+        "S12-AC03"
+      ],
+      "shared_boundary_ids": [
+        "P04",
+        "M02",
+        "R02",
+        "R03"
+      ],
+      "estimate": null,
+      "readiness": "requires_source_assessment"
+    }
+  ]
+}

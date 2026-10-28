@@ -1,0 +1,15 @@
+From: Alex Morgan <alex@dearly-departed.invalid>
+To: Maya Chen <maya@dearly-departed.invalid>
+Subject: Atlas upstream delivery constraint
+Message-ID: <fixture-r1@dearly-departed.invalid>
+X-Fixture-ID: R1
+Date: Sat, 08 Feb 2025 15:00:00 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+SYNTHETIC TEST RECORD
+
+The partner can supply only nightly files until April. Real-time delivery is =
+unavailable before then. This is an upstream delivery constraint on the proce=
+ssing choice we are considering.
